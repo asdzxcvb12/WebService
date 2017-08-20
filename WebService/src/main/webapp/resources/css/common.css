@@ -1,0 +1,13 @@
+#common_style {
+	background-color: black;
+	color: white;
+	font-family: "Love Ya Like A Sister", cursive;
+}
+
+#common_space {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+#common_space .content {
+	margin-top: 50px;
+}

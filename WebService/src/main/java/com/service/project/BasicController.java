@@ -37,6 +37,6 @@ public class BasicController {
 		model.addAttribute("value", value);
 		model.addAttribute("sub", sub);
 		
-		return "home";
+		return "index";
 	}
 }
