@@ -1,0 +1,31 @@
+#terms {
+	width: 100%;
+	height: auto;
+}
+
+#terms .title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#radioBtn {
+	margin-right: 100px;
+}
+
+#inputEmail {
+	display: none;
+}
+
+#inputEmail hr {
+	color: white;
+}
+
+#cancle_next {
+	display: none;
+}
+
+#cancle_next .cancle, .next {
+	width: 30%; 
+	display: inline; 
+	maring-right: 30%;
+}

@@ -20,6 +20,18 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<!-- External Library SMTP mail-->
+		<dependency>
+			<groupId>com.ex</groupId>
+			<artifactId>Ex_mail</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- External Library SMTP activation-->
+		<dependency>
+			<groupId>com.ex</groupId>
+			<artifactId>Ex_activation</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -38,7 +50,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-				
+		
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

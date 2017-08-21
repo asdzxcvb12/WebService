@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.database.MembersMapper">
+
+	<resultMap type="Members" id="MembersAttrResultMap">
+		<result property="idx" column="IDX" />
+		<result property="id" column="ID" />
+		<result property="pw" column="PW" />
+		<result property="nick" column="NICK"/>
+		<result property="mail" column="MAIL"/>
+		<result property="preference" column="PREFERENCE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="question" column="QUESTION"/>
+		<result property="answer" column="ANSWER"/>
+		<result property="create_date" column="CREATE_DATE"/>
+		<result property="authority" column="AUTHORITY"/>
+		<result property="msg" column="MSG"/>
+	</resultMap>
+
+	<select id="getMembersAttr" resultMap="MembersAttrResultMap">
+		SELECT * FROM members
+	</select>
+	
+	<select id="getMembersEmail" resultMap="MembersAttrResultMap">
+		SELECT MAIL FROM MEMBERS
+	</select>
+	
+	
+</mapper>

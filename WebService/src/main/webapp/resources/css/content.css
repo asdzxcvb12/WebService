@@ -1,0 +1,19 @@
+#content {
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-bottom: 30px;
+}
+
+#content .content_left {
+	background-color: red;
+	width: 25%;
+	height: auto;
+	float: left;
+}
+
+#content .content_right {
+	background-color: blue;
+	width: 75%;
+	height: auto;
+	float: left;
+}

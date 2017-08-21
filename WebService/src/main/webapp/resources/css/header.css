@@ -1,13 +1,57 @@
-#header ul {
+#header {
+}
+
+#log {
+	display: table;
+	background-color: silver;
+}
+
+#log ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 10px;
-	float: right;
+	float: left;
 }
 
-#header li {
+#log li {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 	border: 0;
 	display: inline;
+}
+
+#log .signin, .signup {
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+}
+#log .signin:HOVER, .signup:HOVER {
+	color: blue;
+}
+
+#MenuBar {
+	height: 60px;
+	vertical-align: middle;
+	background-color: gray;	
+}
+
+#MenuBar .title {
+	font-size: 40px;
+	margin-left: 1%;
+	margin-right: 10%;
+	font-weight: bold;
+}
+
+#MenuBar .menu {
+	font-size: 20px;
+	margin-left: 2%;
+	margin-right: 2%;
+	color: white;
+	text-decoration: none;
+}
+
+#MenuBar .menu:HOVER {
+	font-size: 25px;
+	color: red;
+	text-transform: uppercase;
 }
