@@ -16,8 +16,11 @@
 				<%@ include file="./content_right.jsp" %>
 			</div>
 		</c:when>
-		<c:otherwise>
+		<c:when test="${membership eq 'term'}">
 			<%@ include file="./membership/term.jsp" %>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="./membership/info.jsp" %>		
 		</c:otherwise>
 	</c:choose>
 </body>

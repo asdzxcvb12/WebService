@@ -72,7 +72,23 @@ $(document).ready(function() {
 		if($(this).val() == $('#getCode').val()) {
 			$('#cancle_next').css('display','inline');
 			$(this).attr('disabled', 'disabled');
+			$('#infoEmail').val($('#frontEmail').val()+'@'+$('#backEmail').val());
 			$('#checkCodeMsg').html('Correct Code');
 		} else $('#checkCodeMsg').html('Incorrect Code');
 	});
+	
+	//term submit
+	$('#termNext').on('click', function() {
+		var infoMembership = $('#infoMembership');
+		infoMembership.attr('action', '?membership=info');
+		infoMembership.attr('method', 'post');
+		infoMembership.submit();
+	});
+	//term cancle
+	$('#termCancle').on('click', function() {
+		history.back();
+		alert('cancle');
+	});
+	
+	
 });

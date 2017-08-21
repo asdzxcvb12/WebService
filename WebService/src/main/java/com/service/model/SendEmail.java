@@ -50,13 +50,14 @@ public class SendEmail {
 		    msg.setContent(content, "text/html;charset=UTF-8"); // 내용과 인코딩
 		     
 		    Transport.send(msg); // 전송
+		    result = "success";
 		} catch(Exception e){
 			result = "fail";
 		    e.printStackTrace();
 		    // 오류 발생시 뒤로 돌아가도록
 		}
 		 
-		result = "success";
+		
 		
 		return result;
 	}

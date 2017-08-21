@@ -10,11 +10,11 @@
 <body>
 <form id="confirmEmail">
 	<div align="center">
-		<strong>Membership Term</strong>
+		<strong style="font-size: 30px;">Membership Term</strong>
 	</div>
 	
 	<fieldset id="terms">
-		<legend align="left" class="title">Term one</legend>
+		<legend align="left" class="title">Term One</legend>
 		content<br>
 		content<br>
 		content<br>
@@ -28,7 +28,7 @@
 	</div>
 	
 	<fieldset id="terms">
-		<legend align="left" class="title">Term two</legend>
+		<legend align="left" class="title">Term Two</legend>
 		content<br>
 		content<br>
 		content<br>
@@ -77,11 +77,14 @@
 			</table>	
 	</div>
 </form>
+<div align="center">
 <form id="infoMembership">
-	<div id="cancle_next" align="center">
-		<p id="testTr" class="cancle">CANCLE...</p>	
-		<p id="termsNext" class="next">NEXT...</p>
+	<div id="cancle_next" class="cancle_next">
+		<strong id="termCancle" class="cancle">CANCLE...</strong>	
+		<strong id="termNext" class="next">NEXT...</strong>
+		<input type="hidden" id="infoEmail" name="infoEmail">
 	</div>
 </form>
+</div>
 </body>
 </html>

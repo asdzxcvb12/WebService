@@ -53,5 +53,6 @@
 #MenuBar .menu:HOVER {
 	font-size: 25px;
 	color: red;
+	font-weight: bold;
 	text-transform: uppercase;
 }

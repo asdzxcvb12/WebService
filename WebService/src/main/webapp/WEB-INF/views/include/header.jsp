@@ -12,7 +12,7 @@
 			<ul>
 				<li><a href="hehe" class="signin">Sign In</a></li>
 				<li> or </li>
-				<li><a href="?membership=membership" class="signup">Sign Up</a></li>
+				<li><a href="?membership=term" class="signup">Sign Up</a></li>
 			</ul>
 		</nav>
 	</div>

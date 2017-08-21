@@ -12,11 +12,18 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/header.css?ver=40">
 	<link rel="stylesheet" type="text/css" href="resources/css/content.css?ver=1">
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css?ver=1">
-	<link rel="stylesheet" type="text/css" href="resources/css/membership.css?ver=5">
+	<link rel="stylesheet" type="text/css" href="resources/css/membership.css?ver=8">
+	
+	<!-- rsa -->
+	<script type="text/javascript" src="resources/js/rsa/jsbn.js"></script>
+	<script type="text/javascript" src="resources/js/rsa/prng4.js"></script>
+	<script type="text/javascript" src="resources/js/rsa/rng.js"></script>
+	<script type="text/javascript" src="resources/js/rsa/rsa.js"></script>
 	
 	<!-- jquery -->
 	<script type="text/javascript" src="resources/js/jquery/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="resources/js/membership.js?ver=5"></script>
+	<script type="text/javascript" src="resources/js/membership_term.js?ver=8"></script>
+	<script type="text/javascript" src="resources/js/membership_info.js?ver=3"></script>
 </head>
 <body id="common_style">
 <div class="common_container">

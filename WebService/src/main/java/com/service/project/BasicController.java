@@ -22,11 +22,16 @@ public class BasicController {
 	
 	@Autowired MembersDAOService membersDAOService;
 	
-	@RequestMapping(value="/*", method = RequestMethod.GET)
+	@RequestMapping(value="/")
 	public String main_page(Model model, HttpServletRequest request) throws Exception {
-
+		//term
 		String membership = (String) request.getParameter("membership");
-		membership = (membership != null) ? membership : "null";
+		if(membership != null) membership = "term";
+		else membership = "null";
+		//info
+		String info = (String) request.getParameter("infoEmail");
+		if(info != null) membership = info;
+		
 		model.addAttribute("membership", membership);
 		
 		IPaddress ipAddress = new IPaddress(request);
@@ -60,6 +65,8 @@ public class BasicController {
 			code = confirmEmailCode.getEmailCode();
 			result = sendEmail.send(email, code);
 		}
+		
+		if(result.equals("fail")) code = "null";
 		
 		System.out.println("code : " + code);
 		setValues = "{\"email\":\""+email+"\",\"code\":\""+code+"\",\"result\":\""+result+"\"}";

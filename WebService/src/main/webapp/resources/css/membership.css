@@ -20,17 +20,21 @@
 	color: white;
 }
 
-#cancle_next {
+.cancle_next {
 	display: none;
-	width: 100%;
+	padding-top: 10px;
 }
 
-#cancle_next .cancle {
-	display: inline;
-	marign-right: 15%;
+.cancle {
+	padding-right: 15%;
+	font-size: 15px;
 }
 
-#cancle_next .next {
-	display: inline;
-	marign-left: 15%;
+.next {
+	padding-left: 15%;
+	font-size: 15px;
+}
+
+.cancle:HOVER, .next:HOVER {
+	color: blue;
 }
