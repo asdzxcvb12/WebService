@@ -22,14 +22,9 @@ public class BasicController {
 	
 	@Autowired MembersDAOService membersDAOService;
 	
-	@RequestMapping(value="/", method = RequestMethod.GET)
+	@RequestMapping(value="/*", method = RequestMethod.GET)
 	public String main_page(Model model, HttpServletRequest request) throws Exception {
-		//cc
-		List<Members> members = membersDAOService.getMembersAttr();
-		for(Members check : members) System.out.println(check.getAuthority());
-		List<Members> membersEmail = membersDAOService.getMembersEmail();
-		for(Members check : membersEmail) System.out.println("메일 : "+check.getMail()+"\n권한 :"+check.getAuthority());
-		//cc
+
 		String membership = (String) request.getParameter("membership");
 		membership = (membership != null) ? membership : "null";
 		model.addAttribute("membership", membership);
@@ -54,9 +49,9 @@ public class BasicController {
 			}
 		}
 		
-		String result = null;
+		String result = "null";
 		String setValues = null;
-		String code = null;
+		String code = "null";
 		
 		if(flag) {
 			ConfirmEmailCode confirmEmailCode = new ConfirmEmailCode();
@@ -66,11 +61,8 @@ public class BasicController {
 			result = sendEmail.send(email, code);
 		}
 		
-		System.out.println("sendMail : "+result+"\nEmail : "+email);
-	
-		setValues = (email != null && code != null) 
-				?"{\"email\":\""+email+"\",\"code\":\""+code+"\"}"
-				:"{\"email\":\""+email+"\",\"code\":\""+code+"\"}";
+		System.out.println("code : " + code);
+		setValues = "{\"email\":\""+email+"\",\"code\":\""+code+"\",\"result\":\""+result+"\"}";
 		
 		response.getWriter().print(setValues);
 	}

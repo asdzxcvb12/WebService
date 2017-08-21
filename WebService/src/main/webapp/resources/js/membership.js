@@ -58,7 +58,7 @@ $(document).ready(function() {
 				var result = JSON.parse(setValues);
 				var sendCode = $('#getCode');
 				
-				if(result.code != null){
+				if(result.code != 'null' && result.result == 'success'){
 					sendCode.val(result.code);
 					$('#insertCode').removeAttr('disabled');
 					alert('Please enter the code');

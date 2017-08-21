@@ -22,10 +22,15 @@
 
 #cancle_next {
 	display: none;
+	width: 100%;
 }
 
-#cancle_next .cancle, .next {
-	width: 30%; 
-	display: inline; 
-	maring-right: 30%;
+#cancle_next .cancle {
+	display: inline;
+	marign-right: 15%;
+}
+
+#cancle_next .next {
+	display: inline;
+	marign-left: 15%;
 }

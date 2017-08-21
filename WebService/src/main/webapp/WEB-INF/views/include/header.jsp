@@ -10,7 +10,7 @@
 	<div align="right">
 		<nav id="log">
 			<ul>
-				<li><a href="#" class="signin">Sign In</a></li>
+				<li><a href="hehe" class="signin">Sign In</a></li>
 				<li> or </li>
 				<li><a href="?membership=membership" class="signup">Sign Up</a></li>
 			</ul>

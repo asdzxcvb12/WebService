@@ -76,7 +76,8 @@
 				</tr>
 			</table>	
 	</div>
-	
+</form>
+<form id="infoMembership">
 	<div id="cancle_next" align="center">
 		<p id="testTr" class="cancle">CANCLE...</p>	
 		<p id="termsNext" class="next">NEXT...</p>
