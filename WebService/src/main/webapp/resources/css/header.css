@@ -20,12 +20,32 @@
 	display: inline;
 }
 
-#log .signin, .signup {
+.setDiv {
+	text-align: center;
+	display: inline;
+}
+
+.mask {
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:9999;
+	background-color:#000;
+	display:none;
+}
+.window {
+	display: none;
+ 	background-color: black;
+	height: auto;
+	z-index:99999;
+}
+
+#log .showMask, .signup, .commonAtag{
 	text-decoration: none;
 	font-weight: bold;
 	color: white;
 }
-#log .signin:HOVER, .signup:HOVER {
+#log .showMask:HOVER, .signup:HOVER, .commonAtag:HOVER {
 	color: blue;
 }
 

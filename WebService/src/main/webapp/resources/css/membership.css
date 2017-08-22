@@ -22,7 +22,11 @@
 
 .cancle_next {
 	display: none;
-	padding-top: 10px;
+	margin-top: 20px;
+}
+
+.info_cancle_next {
+	margin-top: 20px;
 }
 
 .cancle {
