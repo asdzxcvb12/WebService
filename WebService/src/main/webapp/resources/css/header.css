@@ -3,7 +3,6 @@
 
 #log {
 	display: table;
-	background-color: silver;
 }
 
 #log ul {
@@ -40,19 +39,19 @@
 	z-index:99999;
 }
 
-#log .showMask, .signup, .commonAtag{
+#log .showMask, .signup{
 	text-decoration: none;
 	font-weight: bold;
 	color: white;
 }
-#log .showMask:HOVER, .signup:HOVER, .commonAtag:HOVER {
+#log .showMask:HOVER, .signup:HOVER{
 	color: blue;
 }
 
 #MenuBar {
 	height: 60px;
 	vertical-align: middle;
-	background-color: gray;	
+	border-bottom: 3px double white;
 }
 
 #MenuBar .title {
@@ -60,6 +59,8 @@
 	margin-left: 1%;
 	margin-right: 10%;
 	font-weight: bold;
+	text-decoration: none;
+	color: white;
 }
 
 #MenuBar .menu {
@@ -67,6 +68,8 @@
 	margin-left: 2%;
 	margin-right: 2%;
 	color: white;
+	font-weight: bold;
+	text-transform: lowercase;
 	text-decoration: none;
 }
 

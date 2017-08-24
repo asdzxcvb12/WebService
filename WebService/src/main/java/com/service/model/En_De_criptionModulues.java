@@ -85,11 +85,12 @@ public class En_De_criptionModulues {
 		}
 	}
 	
-	public String[] test(HttpServletRequest request) {
-HttpSession session = request.getSession();
-String publicKeyModulus = null;
-String publicKeyExponent = null;
+	public String[] initRSAkeyLog(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String publicKeyModulus = null;
+		String publicKeyExponent = null;
 		KeyPairGenerator generator;
+		
 		try{
 			generator = KeyPairGenerator.getInstance(RSA_INSTANCE);
 			generator.initialize(1024);
@@ -108,6 +109,7 @@ String publicKeyExponent = null;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
 		String[] result = {publicKeyModulus, publicKeyExponent};
 		return result;
 	}

@@ -19,6 +19,12 @@
 		<result property="authority" column="AUTHORITY"/>
 		<result property="msg" column="MSG"/>
 	</resultMap>
+	
+	<resultMap type="MembersLog" id="MembersLogAttrResultMap">
+		<result property="idx" column="IDX" />
+		<result property="id" column="ID" />
+		<result property="log_date" column="LOG_DATE" />
+	</resultMap>
 
 	<select id="getMembersAttr" resultMap="MembersAttrResultMap">
 		SELECT * FROM members
@@ -40,10 +46,15 @@
 		SELECT NICK FROM MEMBERS
 	</select>
 	
+	<!-- INSERT MEMBERS -->
 	<insert id="insertMembers">
 		INSERT INTO MEMBERS(ID, PW, NICK, MAIL, PREFERENCE, ADDRESS) 
 		VALUES(#{id}, #{pw}, #{nick}, #{mail}, #{preference}, #{address})
 	</insert>
 	
+	<!-- INSERT LOGS -->
+	<insert id="insertMembersLog">
+		INSERT INTO MEMBERS_LOG(ID) VALUES(#{id})
+	</insert>
 	
 </mapper>

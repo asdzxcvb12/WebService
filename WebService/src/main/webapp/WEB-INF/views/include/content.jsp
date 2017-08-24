@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="content_right">
-				<%@ include file="./content_right.jsp" %>
+				<%@ include file="./content_right/content_right_main.jsp" %>
 			</div>
 		</c:when>
 		<c:when test="${membership eq 'term'}">

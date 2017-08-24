@@ -1,9 +1,11 @@
 package com.service.project;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,26 +14,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.service.model.ConfirmEmailCode;
+import com.service.model.DistributeTabs;
 import com.service.model.SendEmail;
 import com.service.model.En_De_criptionModulues;
 import com.service.database.Members;
 import com.service.database.MembersDAOService;
+import com.service.database.Tabs;
+import com.service.database.TabsDAOService;
 import com.service.model.IPaddress;
 
 @Controller
 public class BasicController {
 	
-	@Autowired 
-	private MembersDAOService membersDAOService;
+	@Autowired private MembersDAOService membersDAOService;
+	@Autowired private TabsDAOService tabsDAOService;
+	
 	private En_De_criptionModulues en_de_criptionModulues;
+	private DistributeTabs distributeTabs;
+	
 	@RequestMapping(value="/")
 	public String main_page(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
+		HttpSession httpSession = request.getSession();
+		
+		// tabs
+		String cate = (String) request.getParameter("cate");
+		if(cate != null) model.addAttribute("cate", cate);
+				
+		String subCate = (String) request.getParameter("subCate");
+		if(subCate != null) model.addAttribute("subCate", subCate);
+		else subCate = "null";
+				
+		//top, side, sub menuList
+		List<Tabs> tabs = tabsDAOService.getTabs();
+			
+		distributeTabs = new DistributeTabs();
+		List<String> top = distributeTabs.topMenu(tabs);
+		List<Map<String, String>> side = distributeTabs.sideMenu(tabs);
+		List<Map<String, Object>> sub = distributeTabs.subMenu(tabs, top);
+		
+		model.addAttribute("zeroTop", top.get(0));
+		model.addAttribute("top", top);
+		model.addAttribute("side", side);
+		model.addAttribute("sub", sub);
+		
 		
 		//SignUP
 		String logId = (String) request.getParameter("logEncriptId");
 		String logPassword = (String) request.getParameter("logEncriptPw");
-		
+		String getNick = null;
 		if(logId != null && logPassword != null) {
 			en_de_criptionModulues = new En_De_criptionModulues("log");
 			boolean flag = false;
@@ -41,21 +72,26 @@ public class BasicController {
 			logPassword = ID_PW[1];
 			List<Members> members = membersDAOService.getMembersLog();
 			for(Members searchIdPw : members){
-				System.out.println(searchIdPw.getId()+","+searchIdPw.getPw()+","+searchIdPw.getNick());
 				if(searchIdPw.getId().equals(logId) && searchIdPw.getPw().equals(logPassword)) {
+					getNick = searchIdPw.getNick();
 					flag = true;
 					break;
 				}
 			}
+			
+			
 			System.out.println(logId+","+logPassword);
 			if(flag) {
 				System.out.println("yesyes");
+				membersDAOService.insertLog(logId);
+				httpSession.setAttribute("signIn", getNick);
 				response.getWriter().print("<script>alert('Welcome!! "+logId+"');</script>");
 			} else {
 				System.out.println("npnp");
 				response.getWriter().print("<script>alert('Don`t come!! "+logId+"');</script>");
 			}
 		}
+		
 		
 		//membershipResult
 		String id = (String) request.getParameter("membership_ID");
@@ -104,6 +140,19 @@ public class BasicController {
 		IPaddress ipAddress = new IPaddress(request);
 		model.addAttribute("ip", ipAddress.getAddress());
 		
+		/* getSession sign out */
+		String signout = (String) request.getParameter("signout");
+		if(httpSession.getAttribute("signIn") != null && signout != null) {
+			httpSession.removeAttribute("signIn");
+		}
+		
+		/* getSession sign in */
+		if(httpSession.getAttribute("signIn") != null) {
+			System.out.println("log in");
+			model.addAttribute("logNick", httpSession.getAttribute("signIn").toString());
+		}
+		
+	
 		return "index";
 	}
 	
@@ -180,9 +229,7 @@ public class BasicController {
 			}
 		}
 		
-		if(flag) {
-			getData = "{\"nickname\":\"true\"}";
-		}
+		if(flag) getData = "{\"nickname\":\"true\"}";
 		
 		response.getWriter().print(getData);
 	}
@@ -191,8 +238,8 @@ public class BasicController {
 	@RequestMapping(value="/createRSAkey", method = RequestMethod.POST)
 	public void createRSAkey(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		en_de_criptionModulues = new En_De_criptionModulues("log");
-		String[] test = en_de_criptionModulues.test(request);
-		String getData = "{\"a\":\""+test[0]+"\",\"b\":\""+test[1]+"\"}";
+		String[] getInitRSAkey = en_de_criptionModulues.initRSAkeyLog(request);
+		String getData = "{\"a\":\""+getInitRSAkey[0]+"\",\"b\":\""+getInitRSAkey[1]+"\"}";
 		response.getWriter().print(getData);
 	}
 }

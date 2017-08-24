@@ -1,0 +1,32 @@
+.passDay {
+	color: gray;	
+}
+
+.presentRedDay {
+	color: red;
+}
+.presentBlueDay {
+	color: blue;
+}
+.presentWhiteDay:HOVER {
+	background-color: #CCCCCC;
+}
+.presentRedDay:HOVER {
+	background-color: #CCCCCC;
+}
+.presentBlueDay:HOVER {
+	background-color: #CCCCCC;
+}
+
+.basicField {
+	border : 2px medium white;
+	border-radius : 2em;
+}
+
+.sideMenuAtag{
+	text-decoration: none;
+	color: white;
+}
+.sideMenuAtag:HOVER {
+	color: blue;
+}

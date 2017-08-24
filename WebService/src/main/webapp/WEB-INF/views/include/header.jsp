@@ -6,6 +6,8 @@
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
+<c:choose>
+	<c:when test="${logNick eq null}">
 	<!-- login or out or resist -->
 	<div align="right" style="width: 100%">
 		<nav id="log">
@@ -53,18 +55,27 @@
 			</ul>
 		</nav>
 	</div>
+	</c:when>
+	<c:otherwise>
+		<div align="right" style="width: 100%">
+			Welcome to our site <strong style="color: blue; font-size: 20px;">Mr. ${logNick}</strong>
+			<form id="signoutForm" action="." method="post">
+				<a id="signoutBtn" class="commonAtag">Sign Out</a>
+				<input type="hidden" id="signout" name="signout" value="signout">
+			</form>
+		</div>
+	</c:otherwise>
+</c:choose>
 	
 	<!-- header image -->
 	<img alt="sample" src="resources/img/header.jpg" width="100%" height="200px"/>
 
 	<!-- menu bar -->
 	<p id="MenuBar">
-		<strong class="title">Code Storage</strong> 
-		<a href="#" class="menu">one</a>
-		<a href="#" class="menu">two</a>
-		<a href="#" class="menu">three</a>
-	 	<a href="#" class="menu">four</a>
-	 	<a href="#" class="menu">five</a>
+		<Strong class="title">Code Storage</Strong> 
+		<c:forEach items="${top}" var="topMenu">
+	 		<a href="?cate=${topMenu}" class="menu">${topMenu}</a>
+	 	</c:forEach>
 	</p>
 	 
 </body>

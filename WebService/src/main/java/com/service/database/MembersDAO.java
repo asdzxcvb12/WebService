@@ -9,4 +9,5 @@ public interface MembersDAO {
 	public ArrayList<Members> getMembersNickName();
 	public ArrayList<Members> getMembersLog();
 	public void insertMembers(Members members);
+	public void insertLog(String id);
 }

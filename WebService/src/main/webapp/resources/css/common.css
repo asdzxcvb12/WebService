@@ -7,3 +7,12 @@
 #common_style .common_container {
 	width: 100%;
 }
+
+.commonAtag{
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+}
+.commonAtag:HOVER {
+	color: blue;
+}

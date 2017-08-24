@@ -92,4 +92,10 @@ function wrapWindowByMask(){
         		logFormTag.submit();
         	}
         });
+        
+        //Log Out Button
+        $('#signoutBtn').on('click', function() {
+        	var signoutForm = $('#signoutForm');
+        	signoutForm.submit();
+        });
     });
