@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.database.BoardMapper">
+
+	<resultMap type="BasicBoard" id="BasicBoardAttrResultMap">
+		<result property="idx" column="IDX" />
+		<result property="title" column="TITLE" />
+		<result property="writer" column="WRITER" />
+		<result property="create_date" column="CREATE_DATE" />
+		<result property="fix_date" column="FIX_DATE" />
+		<result property="recommeded" column="RECOMMENDED" />
+		<result property="lookup" column="LOOKUP" />
+	</resultMap>
+
+	<select id="getBasicBoardList" resultMap="BasicBoardAttrResultMap" parameterType="String">
+		SELECT * FROM ${value} ORDER BY idx DESC
+	</select>
+	
+</mapper>

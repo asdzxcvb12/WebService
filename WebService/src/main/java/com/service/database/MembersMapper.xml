@@ -24,6 +24,7 @@
 		<result property="idx" column="IDX" />
 		<result property="id" column="ID" />
 		<result property="log_date" column="LOG_DATE" />
+		<result property="log_address" column="LOG_ADDRESS" />
 	</resultMap>
 
 	<select id="getMembersAttr" resultMap="MembersAttrResultMap">
@@ -54,7 +55,7 @@
 	
 	<!-- INSERT LOGS -->
 	<insert id="insertMembersLog">
-		INSERT INTO MEMBERS_LOG(ID) VALUES(#{id})
+		INSERT INTO MEMBERS_LOG(ID, LOG_ADDRESS) VALUES(#{id}, #{log_address})
 	</insert>
 	
 </mapper>

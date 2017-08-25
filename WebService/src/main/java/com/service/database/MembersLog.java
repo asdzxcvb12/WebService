@@ -4,6 +4,7 @@ public class MembersLog {
 	private String idx;
 	private String id;
 	private String log_date;
+	private String log_address;
 	
 	public String getIdx() {
 		return idx;
@@ -22,6 +23,12 @@ public class MembersLog {
 	}
 	public void setLog_date(String log_date) {
 		this.log_date = log_date;
+	}
+	public String getLog_address() {
+		return log_address;
+	}
+	public void setLog_address(String log_address) {
+		this.log_address = log_address;
 	}
 	
 }

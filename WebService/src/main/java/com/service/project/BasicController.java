@@ -17,17 +17,21 @@ import com.service.model.ConfirmEmailCode;
 import com.service.model.DistributeTabs;
 import com.service.model.SendEmail;
 import com.service.model.En_De_criptionModulues;
+import com.service.database.BasicBoard;
+import com.service.database.BoardDAOService;
 import com.service.database.Members;
 import com.service.database.MembersDAOService;
+import com.service.database.MembersLog;
 import com.service.database.Tabs;
 import com.service.database.TabsDAOService;
 import com.service.model.IPaddress;
 
-@Controller
+@Controller 	
 public class BasicController {
 	
 	@Autowired private MembersDAOService membersDAOService;
 	@Autowired private TabsDAOService tabsDAOService;
+	@Autowired private BoardDAOService boardDAOService;
 	
 	private En_De_criptionModulues en_de_criptionModulues;
 	private DistributeTabs distributeTabs;
@@ -36,6 +40,12 @@ public class BasicController {
 	public String main_page(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		HttpSession httpSession = request.getSession();
+		
+		// basic board
+		List<BasicBoard> getBoard = boardDAOService.getBasicBoardList("board_public");
+		for(BasicBoard basicBoard : getBoard) {
+			System.out.println(basicBoard.getIdx());
+		}
 		
 		// tabs
 		String cate = (String) request.getParameter("cate");
@@ -79,11 +89,15 @@ public class BasicController {
 				}
 			}
 			
-			
 			System.out.println(logId+","+logPassword);
 			if(flag) {
 				System.out.println("yesyes");
-				membersDAOService.insertLog(logId);
+				IPaddress ipAddress = new IPaddress(request);
+				System.out.println("log id : " + logId);
+				MembersLog membersLog = new MembersLog();
+				membersLog.setId(logId);
+				membersLog.setLog_address(ipAddress.getAddress());
+				membersDAOService.insertLog(membersLog);
 				httpSession.setAttribute("signIn", getNick);
 				response.getWriter().print("<script>alert('Welcome!! "+logId+"');</script>");
 			} else {
@@ -91,7 +105,6 @@ public class BasicController {
 				response.getWriter().print("<script>alert('Don`t come!! "+logId+"');</script>");
 			}
 		}
-		
 		
 		//membershipResult
 		String id = (String) request.getParameter("membership_ID");
@@ -124,7 +137,7 @@ public class BasicController {
 		
 		//term
 		String membership = (String) request.getParameter("membership");
-		if(membership != null) membership = "term";
+		if(membership != null) membership = "term";  
 		else membership = "null";
 		
 		//info RSA
@@ -136,9 +149,6 @@ public class BasicController {
 		}
 		
 		model.addAttribute("membership", membership);
-		
-		IPaddress ipAddress = new IPaddress(request);
-		model.addAttribute("ip", ipAddress.getAddress());
 		
 		/* getSession sign out */
 		String signout = (String) request.getParameter("signout");

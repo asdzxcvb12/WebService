@@ -1,7 +1,10 @@
+.commonDay, .passDay, .presentRedDay, .presentBlueDay, .presentWhiteDay, .toDay  {
+	border-bottom: 1px solid #444444;
+}
+
 .passDay {
 	color: gray;	
 }
-
 .presentRedDay {
 	color: red;
 }
@@ -17,6 +20,15 @@
 .presentBlueDay:HOVER {
 	background-color: #CCCCCC;
 }
+
+.toDay {
+	color: pink;
+	font-weight: bold;
+}
+.toDay:HOVER {
+	background-color: #CCCCCC;
+}
+
 
 .basicField {
 	border : 2px medium white;

@@ -9,5 +9,5 @@ public interface MembersMapper {
 	ArrayList<Members> getMembersNickName();
 	ArrayList<Members> getMembersLog();
 	void insertMembers(Members members);
-	void insertMembersLog(String id);
+	void insertMembersLog(MembersLog membersLog);
 }

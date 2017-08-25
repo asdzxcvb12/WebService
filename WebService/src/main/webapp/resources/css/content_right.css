@@ -1,0 +1,38 @@
+.title_line {
+	border-bottom: 3px double white;
+}
+
+.line {
+	border-bottom: 3px solid white;
+}
+ #common_board {
+    width: 100%;
+    border-top: 3px solid #444444;
+    border-bottom: 3px solid #444444;
+    border-collapse: collapse;
+    table-layout: fixed;
+ }
+ .common_board_tr {
+    border-bottom: 3px double #444444;
+ }
+ 
+ .common_board_tr:HOVER {
+ 	background-color: #444444;
+ }
+ .common_board_td {
+ 	padding-top: 10px;
+ 	padding-bottom: 10px;
+ }
+ 
+ .common_board_content_tr {
+	border-bottom: 1px solid #444444;
+ }
+ 
+ .common_borad_content_td {
+ 	padding-top: 7px;
+ 	padding-bottom: 7px;
+ }
+ 
+ .common_board_end {
+	border-bottom: 3px double #444444;
+ }

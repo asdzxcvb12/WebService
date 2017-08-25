@@ -77,7 +77,7 @@ $(document).ready(function() {
 		} else $('#checkCodeMsg').html('Incorrect Code');
 	});
 	
-	//term submit
+	//term 
 	$('#termNext').on('click', function() {
 		var infoMembership = $('#infoMembership');
 		infoMembership.attr('action', '?membership=info');

@@ -11,7 +11,7 @@ function go_time() {
 	var sec = now.getSeconds(); // 초
 	var am_pm;
 	
-	if(hour > 12) {
+	if(hour >= 12) {
 		am_pm = 'PM';
 		hour = hour - 12;
 		if(hour < 10) hour = '0'+hour;
@@ -97,7 +97,7 @@ function setCalendarTable(y, m) {
 	var start = 1;
 	var spaceStart = 1;
 	
-	calTable.append('<tr><td colspan=7 align=center><strong id=backBtn class=commonAtag onclick=backBtn()>&lt;&lt;&lt;&lt;</strong>&nbsp;&nbsp;&nbsp;'+y+'年&nbsp;&nbsp;'+m+
+	calTable.append('<tr><td colspan=7 align=center class=commonDay><strong id=backBtn class=commonAtag onclick=backBtn()>&lt;&lt;&lt;&lt;</strong>&nbsp;&nbsp;&nbsp;'+y+'年&nbsp;&nbsp;'+m+
 			'月&nbsp;&nbsp;&nbsp;<strong id=goBtn class=commonAtag onclick=goBtn()>&gt;&gt;&gt;&gt;</strong></td></tr><tr>');
 	for(var i=0; i<7; i++) calTable.append('<td align=center>'+day[i]+'</td>');
 	calTable.append('</tr>');
@@ -112,13 +112,13 @@ function setCalendarTable(y, m) {
 			} else if(start <= pastLastDate) {
 				var present = new Date(y,m-1,start);
 				if(present.getDay() == 0) {
-					if(start == date) calTable.append('<td class=presentRedDay align=center style=\"fonttext-decoration: underline;\">' + start + '</td>');
+					if(start == date) calTable.append('<td class=toDay align=center>' + start + '</td>');
 					else calTable.append('<td class=presentRedDay align=center>' + start + '</td>');
 				} else if(present.getDay() == 6) {
-					if(start == date) calTable.append('<td class=presentBlueDay align=center style=\"fonttext-decoration: underline;\">' + start + '</td>');
+					if(start == date) calTable.append('<td class=toDay align=center>' + start + '</td>');
 					else calTable.append('<td class=presentBlueDay align=center>' + start + '</td>');
 				} else {
-					if(start == date) calTable.append('<td class=presentWhiteDay align=center style=\"fonttext-decoration: underline;\">' + start + '</td>');
+					if(start == date) calTable.append('<td class=toDay align=center>' + start + '</td>');
 					else calTable.append('<td class=presentWhiteDay align=center>' + start + '</td>');
 				}
 				start += 1;

@@ -72,10 +72,10 @@ public class MembersDAOService implements MembersDAO{
 	
 	/* LOG INSERT */
 	@Override
-	public void insertLog(String id) {
+	public void insertLog(MembersLog membersLog) {
 		// TODO Auto-generated method stub
 		MembersMapper membersMapper = sqlSession.getMapper(MembersMapper.class);
-		membersMapper.insertMembersLog(id);
+		membersMapper.insertMembersLog(membersLog);
 	}
 
 }
