@@ -1,5 +1,6 @@
 package com.service.project;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.service.model.BoardManage;
 import com.service.model.ConfirmEmailCode;
 import com.service.model.DistributeTabs;
 import com.service.model.SendEmail;
 import com.service.model.En_De_criptionModulues;
 import com.service.database.BasicBoard;
 import com.service.database.BoardDAOService;
+import com.service.database.BoardPage;
 import com.service.database.Members;
 import com.service.database.MembersDAOService;
 import com.service.database.MembersLog;
@@ -35,26 +38,63 @@ public class BasicController {
 	
 	private En_De_criptionModulues en_de_criptionModulues;
 	private DistributeTabs distributeTabs;
+	private BoardManage boardManage;
 	
 	@RequestMapping(value="/")
 	public String main_page(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		HttpSession httpSession = request.getSession();
 		
-		// basic board
-		List<BasicBoard> getBoard = boardDAOService.getBasicBoardList("board_public");
-		for(BasicBoard basicBoard : getBoard) {
-			System.out.println(basicBoard.getIdx());
-		}
-		
 		// tabs
 		String cate = (String) request.getParameter("cate");
-		if(cate != null) model.addAttribute("cate", cate);
-				
+		if(cate == null) cate = "null";
+		model.addAttribute("cate", cate);
+		 
 		String subCate = (String) request.getParameter("subCate");
-		if(subCate != null) model.addAttribute("subCate", subCate);
-		else subCate = "null";
+		if(subCate == null || subCate.equals("")) subCate = "null";
+		model.addAttribute("subCate", subCate);
+		//board
+		boardManage = new BoardManage();
+		Map<String, String> board = boardManage.boardManage(cate, subCate);
+		System.out.println("cate : " + cate);
+		System.out.println("subCate : " + subCate);
+		String kind = String.valueOf(board.get("kind"));
+		String boardName = String.valueOf(board.get("name"));
+		System.out.println("kind : "+kind +" name : "+ boardName);
+
+		//basic
+			if(kind.equals("basic")){
+				BoardPage boardPage = new BoardPage();
+				boardPage.setBoardName(boardName);
 				
+				HashMap<String, String> basic = boardDAOService.getBasicBoardList(boardName);
+				List<BasicBoard> pageBasic;
+				String pageNum = (String) request.getParameter("pageNum");
+				if(pageNum == null) pageNum = "1";
+				int pageNumInt = Integer.parseInt(pageNum);
+				
+				int cnt = Integer.parseInt(String.valueOf(basic.get("cnt")));
+				int endCnt = cnt / 10 + 1;
+				
+				if(pageNumInt == 1) {
+					if(endCnt == 1) boardPage.setStart(1);
+					else boardPage.setStart(cnt-9);
+					boardPage.setEnd(cnt);
+					pageBasic = boardDAOService.getBasicBoardPage(boardPage);
+					model.addAttribute("board", pageBasic);
+				} else {
+					boardPage.setEnd(cnt - ((pageNumInt-1)*10));
+					if(cnt - ((pageNumInt-1)*10) - 9 < 1) boardPage.setStart(1);
+					boardPage.setStart(cnt - ((pageNumInt-1)*10) - 9);
+					pageBasic = boardDAOService.getBasicBoardPage(boardPage);
+					model.addAttribute("board", pageBasic);
+				}
+				model.addAttribute("pageNumInt", pageNumInt);
+				model.addAttribute("entirePage", endCnt);
+			}
+			//linear
+			//gride
+			
 		//top, side, sub menuList
 		List<Tabs> tabs = tabsDAOService.getTabs();
 			
@@ -67,7 +107,6 @@ public class BasicController {
 		model.addAttribute("top", top);
 		model.addAttribute("side", side);
 		model.addAttribute("sub", sub);
-		
 		
 		//SignUP
 		String logId = (String) request.getParameter("logEncriptId");

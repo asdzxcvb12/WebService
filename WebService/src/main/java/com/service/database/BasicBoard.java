@@ -6,7 +6,7 @@ public class BasicBoard {
 	private String writer;
 	private String create_date;
 	private String fix_date;
-	private String recommeded;
+	private String recommended;
 	private String lookup;
 	
 	public String getIdx() {
@@ -39,11 +39,11 @@ public class BasicBoard {
 	public void setFix_date(String fix_date) {
 		this.fix_date = fix_date;
 	}
-	public String getRecommeded() {
-		return recommeded;
+	public String getRecommended() {
+		return recommended;
 	}
-	public void setRecommeded(String recommeded) {
-		this.recommeded = recommeded;
+	public void setRecommended(String recommended) {
+		this.recommended = recommended;
 	}
 	public String getLookup() {
 		return lookup;

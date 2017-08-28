@@ -1,7 +1,9 @@
 package com.service.database;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface BoardMapper {
-	public ArrayList<BasicBoard> getBasicBoardList(String boardName);
+	public HashMap<String, String> getBasicBoardCount(String boardName);
+	public ArrayList<BasicBoard> getBasicBoardPage(BoardPage boardPage);
 }

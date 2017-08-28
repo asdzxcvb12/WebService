@@ -11,12 +11,16 @@
 		<result property="writer" column="WRITER" />
 		<result property="create_date" column="CREATE_DATE" />
 		<result property="fix_date" column="FIX_DATE" />
-		<result property="recommeded" column="RECOMMENDED" />
+		<result property="recommended" column="RECOMMENDED" />
 		<result property="lookup" column="LOOKUP" />
 	</resultMap>
-
-	<select id="getBasicBoardList" resultMap="BasicBoardAttrResultMap" parameterType="String">
-		SELECT * FROM ${value} ORDER BY idx DESC
+	
+	<select id="getBasicBoardCount" resultType="java.util.HashMap" parameterType="String">
+		SELECT COUNT(*) AS "cnt" FROM ${value}
+	</select>
+	
+	<select id="getBasicBoardPage" resultMap="BasicBoardAttrResultMap" parameterType="BoardPage">
+		SELECT * FROM ${boardName} WHERE IDX BETWEEN ${start} AND ${end} ORDER BY IDX DESC
 	</select>
 	
 </mapper>

@@ -13,8 +13,14 @@
 			</div>
 
 			<div class="content_right">
-<!--  				<%@ include file="./content_right/content_right_main.jsp" %>-->
-				<%@ include file="./content_right/common_basic_board.jsp" %>
+				<c:choose>
+				<c:when test="${cate eq 'BOARD'}">
+					<%@ include file="./content_right/common_basic_board.jsp" %>
+				</c:when>
+				<c:otherwise>
+					<%@ include file="./content_right/content_right_main.jsp" %>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</c:when>
 		<c:when test="${membership eq 'term'}">
