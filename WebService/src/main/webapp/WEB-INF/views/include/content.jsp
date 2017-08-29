@@ -15,7 +15,13 @@
 			<div class="content_right">
 				<c:choose>
 				<c:when test="${cate eq 'BOARD'}">
-					<%@ include file="./content_right/common_basic_board.jsp" %>
+					<%@ include file="./content_right/basic_board.jsp" %>
+				</c:when>
+				<c:when test="${board eq 'write'}">
+					<%@ include file="./content_right/board_write.jsp" %>
+				</c:when>
+				<c:when test="${board eq 'content'}">
+					<%@ include file="./content_right/board_content.jsp" %>
 				</c:when>
 				<c:otherwise>
 					<%@ include file="./content_right/content_right_main.jsp" %>

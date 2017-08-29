@@ -23,4 +23,12 @@
 		SELECT * FROM ${boardName} WHERE IDX BETWEEN ${start} AND ${end} ORDER BY IDX DESC
 	</select>
 	
+	<select id="getBasicBoardSearchCount" resultMap="BasicBoardAttrResultMap" parameterType="BoardPage">
+		SELECT idx FROM (SELECT * FROM ${boardName} ORDER BY IDX DESC) WHERE ${searchOption} LIKE '%${search}%'
+	</select>
+	
+	<select id="getBasicBoardSearch" resultMap="BasicBoardAttrResultMap" parameterType="BoardPage">
+		SELECT * FROM (SELECT * FROM (SELECT * FROM ${boardName} ORDER BY IDX DESC) WHERE ${searchOption} LIKE '%${search}%') WHERE IDX BETWEEN ${start} AND ${end}
+	</select>
+	
 </mapper>

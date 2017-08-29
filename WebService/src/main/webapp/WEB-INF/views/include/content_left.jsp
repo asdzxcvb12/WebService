@@ -33,7 +33,7 @@
 <div align="left">
 		<fieldset class="basicField">
 		
-			<c:if test="${cate == null}"><c:set var="cate" value="${zeroTop}" /></c:if>
+			<c:if test="${cate == 'null'}"><c:set var="cate" value="${zeroTop}" /></c:if>
 				<legend align="top" style="font-size: 20px; font-style: bold; text-align: center"><b>${cate}</b></legend>
 
 				<c:forEach items="${side}" var="sideMenu" varStatus="sideStatus">
@@ -48,7 +48,7 @@
 								<c:set value="${subMenu.get(cate)}" var="sideSubMenu" />
 								<c:if test="${sideSubMenu.get(sideMenu.get(cate)) != null}">
 									<li style="margin-left: 30px"><a href="?cate=${cate}&subCate=${sideSubMenu.get(sideMenu.get(cate))}" class="sideMenuAtag">
-											${sideSubMenu.get(sideMenu.get(cate))} </a></li>
+											${sideSubMenu.get(sideMenu.get(cate))}</a></li>
 								</c:if>
 							</c:when>
 

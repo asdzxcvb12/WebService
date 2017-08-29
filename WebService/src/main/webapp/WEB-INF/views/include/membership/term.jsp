@@ -4,7 +4,6 @@
 <html>
 <head>
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8;">
-	
 	<title>Code Storage Membership Term</title>
 </head>
 <body>

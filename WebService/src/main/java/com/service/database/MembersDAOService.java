@@ -15,7 +15,6 @@ public class MembersDAOService implements MembersDAO{
 	@Override
 	public ArrayList<Members> getMembersAttr() {
 		// TODO Auto-generated method stub
-		
 		ArrayList<Members> result = new ArrayList<Members>();
 		MembersMapper membersMapper = sqlSession.getMapper(MembersMapper.class);
 		result = membersMapper.getMembersAttr();
@@ -25,7 +24,6 @@ public class MembersDAOService implements MembersDAO{
 	@Override
 	public ArrayList<Members> getMembersEmail() {
 		// TODO Auto-generated method stub
-		
 		ArrayList<Members> result = new ArrayList<Members>();
 		MembersMapper membersMapper = sqlSession.getMapper(MembersMapper.class);
 		result = membersMapper.getMembersEmail();
@@ -35,7 +33,6 @@ public class MembersDAOService implements MembersDAO{
 	@Override
 	public ArrayList<Members> getMembersId() {
 		// TODO Auto-generated method stub
-		
 		ArrayList<Members> result = new ArrayList<Members>();
 		MembersMapper membersMapper = sqlSession.getMapper(MembersMapper.class);
 		result = membersMapper.getMembersId();
@@ -45,7 +42,6 @@ public class MembersDAOService implements MembersDAO{
 	@Override
 	public ArrayList<Members> getMembersNickName() {
 		// TODO Auto-generated method stub
-		
 		ArrayList<Members> result = new ArrayList<Members>();
 		MembersMapper membersMapper = sqlSession.getMapper(MembersMapper.class);
 		result = membersMapper.getMembersNickName();

@@ -8,7 +8,7 @@
 <body>
 <form>
 	<div align="center" style="width: 100%;">
-	<Strong>Sample Board</Strong>
+	<Strong style="font-size: 25px;">-&nbsp;${subCate}&nbsp;-</Strong>
 		<table style="width: 100%;" id="common_board">
 			<tr align="center" class="common_board_tr">
 				<th style="width: 5%" class="common_board_td">번호</th>
@@ -23,9 +23,9 @@
 				<c:choose>
 				<c:when test="${statusBoard.last}">
 					<tr align="center" class="common_board_end">
-						<td style="width: 5%" class="common_borad_content_td">${board.idx}</td>
+						<td id="getBasicContentIdx" style="width: 5%" class="common_borad_content_td">${board.idx}</td>
 						<td style="width:40%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="common_borad_content_td">
-							<a class="commonAtag" href="">
+							<a id="getBasicContent" class="commonAtag" onClick="basicContent(${board.idx})">
 							${board.title}
 							</a>
 						</td>
@@ -38,9 +38,9 @@
 				</c:when>
 				<c:otherwise>
 					<tr align="center" class="common_board_content_tr">
-						<td style="width: 5%" class="common_borad_content_td">${board.idx}</td>
+						<td id="getBasicContentIdx" style="width: 5%" class="common_borad_content_td">${board.idx}</td>
 						<td style="width:40%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="common_borad_content_td">
-							<a class="commonAtag" href="">
+							<a id="getBasicContent" class="commonAtag" onClick="basicContent(${board.idx})">
 							${board.title}
 							</a>
 						</td>
@@ -56,36 +56,66 @@
 			
 			<tr>
 				<th colspan="7" align="center" class="common_board_td">
-				<a href="?cate=${cate}&subCate=${subCate}&pageNum=1" class="commonAtag">&lt;&lt;&lt;&lt;</a>&nbsp;
+				<c:choose>
+					<c:when test="${searchOption ne null}">
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}&searchOption=${searchOption}&search=${search}" class="commonAtag">&lt;&lt;&lt;&lt;</a>
+					</c:when>
+					<c:otherwise>
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}" class="commonAtag">&lt;&lt;&lt;&lt;</a>
+					</c:otherwise>
+				</c:choose>
+					&nbsp;
 				<c:forEach begin="1" end="${entirePage}" var="page" step="1">
 					&nbsp;
 					<c:choose>
 					<c:when test="${page eq pageNumInt}">
-						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}" class="commonAtag" style="color: blue;">${page}</a>
+						<c:choose>
+							<c:when test="${searchOption ne null}">
+								<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}&searchOption=${searchOption}&search=${search}" class="commonAtag" style="color: blue;">${page}</a>
+							</c:when>
+							<c:otherwise>
+								<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}" class="commonAtag" style="color: blue;">${page}</a>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}" class="commonAtag">${page}</a>
+						<c:choose>
+							<c:when test="${searchOption ne null}">
+								<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}&searchOption=${searchOption}&search=${search}" class="commonAtag">${page}</a>
+							</c:when>
+							<c:otherwise>
+								<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}" class="commonAtag">${page}</a>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 					</c:choose>
 					&nbsp;				
 				</c:forEach>
-				&nbsp;<a href="?cate=${cate}&subCate=${subCate}&pageNum=${entirePage}" class="commonAtag">&gt;&gt;&gt;&gt;</a>	
+				&nbsp;
+				<c:choose>
+					<c:when test="${searchOption ne null}">
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}&searchOption=${searchOption}&search=${search}" class="commonAtag">&gt;&gt;&gt;&gt;</a>
+					</c:when>
+					<c:otherwise>
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${entirePage}" class="commonAtag">&gt;&gt;&gt;&gt;</a>
+					</c:otherwise>
+				</c:choose>
+				
 				</th>
 			</tr>
 		</table>
 	</div>
-	<div style="height: 30px; vertical-align: center">
-		<select>
-			<option>번호</option>
+	<div style="height: 30px; vertical-align: center" align="right">
+		<select id="selectOption">
 			<option>제목</option>
 			<option>작성자</option>
 		</select>
-		<input type="text" size="15px">
-		SEARCH
-		
-		WRITE
+		<input id="searchContent"type="text" size="15px">
+		<a id="basicBoardSearch" class="commonAtag" style="margin-right:20px;">SEARCH</a>
+		<a id="basicBoardWrite" class="commonAtag" style="margin-right:5px;">WRITE</a>
 	</div>
-	
+	<input type="hidden" id="basicBoardName" value="${subCate}">
+	<input type="hidden" id="cateName" value="${cate}">
 </form>	
 </body>
 </html>

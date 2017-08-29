@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/header.css?ver=52">
 	<link rel="stylesheet" type="text/css" href="resources/css/content.css?ver=11">
 	<link rel="stylesheet" type="text/css" href="resources/css/content_left.css?ver=12">
-	<link rel="stylesheet" type="text/css" href="resources/css/content_right.css?ver=21">
+	<link rel="stylesheet" type="text/css" href="resources/css/content_right.css?ver=24">
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css?ver=3">
 	<link rel="stylesheet" type="text/css" href="resources/css/membership.css?ver=13">
 	
@@ -27,8 +27,9 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript" src="resources/js/header.js?ver=7"></script>
 	<script type="text/javascript" src="resources/js/content_left.js?ver=53"></script>
-	<script type="text/javascript" src="resources/js/membership_term.js?ver=11"></script>
-	<script type="text/javascript" src="resources/js/membership_info.js?ver=26"></script>
+	<script type="text/javascript" src="resources/js/membership_term.js?ver=13"></script>
+	<script type="text/javascript" src="resources/js/membership_info.js?ver=27"></script>
+	<script type="text/javascript" src="resources/js/basic_board.js?ver=13"></script>
 </head>
 <body id="common_style" onload="javascript:go_time()">
 <div class="common_container">

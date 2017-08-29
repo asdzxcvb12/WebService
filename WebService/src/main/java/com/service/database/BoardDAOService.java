@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public class BoardDAOService implements BoardDAO {
 	
 	@Autowired SqlSession sqlSession;
-
+	
 	@Override
 	public HashMap<String, String> getBasicBoardList(String boardName) {
 		// TODO Auto-generated method stub
@@ -24,10 +24,28 @@ public class BoardDAOService implements BoardDAO {
 	@Override
 	public ArrayList<BasicBoard> getBasicBoardPage(BoardPage boardPage) {
 		// TODO Auto-generated method stub
-		ArrayList<BasicBoard> boardResult = new ArrayList<BasicBoard>();
+		ArrayList<BasicBoard> result = new ArrayList<BasicBoard>();
 		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
-		boardResult = boardMapper.getBasicBoardPage(boardPage);
-		return boardResult;
+		result = boardMapper.getBasicBoardPage(boardPage);
+		return result;
+	}
+
+	@Override
+	public ArrayList<BasicBoard> getBasicBoardSearchCount(BoardPage boardPage) {
+		// TODO Auto-generated method stub
+		ArrayList<BasicBoard> result = new ArrayList<BasicBoard>();
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		result = boardMapper.getBasicBoardSearchCount(boardPage);
+		return result;
+	}
+
+	@Override
+	public ArrayList<BasicBoard> getBasicBoardSearch(BoardPage boardPage) {
+		// TODO Auto-generated method stub
+		ArrayList<BasicBoard> result = new ArrayList<BasicBoard>();
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		result = boardMapper.getBasicBoardSearch(boardPage);
+		return result;
 	}
 
 }

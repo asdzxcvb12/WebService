@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8" http-equiv="text/html; charser=utf-8">
 </head>
 <body>
-content
+write
 </body>
 </html>

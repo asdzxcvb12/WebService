@@ -47,11 +47,18 @@ public class BasicController {
 		
 		// tabs
 		String cate = (String) request.getParameter("cate");
-		if(cate == null) cate = "null";
+		if(cate == null || cate.equals("")) cate = "null";
 		model.addAttribute("cate", cate);
 		 
 		String subCate = (String) request.getParameter("subCate");
-		if(subCate == null || subCate.equals("")) subCate = "null";
+		if(subCate == null || subCate.equals("")) {
+			if(cate.equals("HOME")) subCate = "Home";
+			else if(cate.equals("LANGUAGE")) subCate = "java";
+			else if(cate.equals("GALLARY")) subCate = "Picture";
+			else if(cate.equals("BOARD")) subCate = "PublicBoard";
+			else if(cate.equals("NOTICE")) subCate = "MyPage";
+			else subCate = "null";
+		}
 		model.addAttribute("subCate", subCate);
 		//board
 		boardManage = new BoardManage();
@@ -60,38 +67,15 @@ public class BasicController {
 		System.out.println("subCate : " + subCate);
 		String kind = String.valueOf(board.get("kind"));
 		String boardName = String.valueOf(board.get("name"));
-		System.out.println("kind : "+kind +" name : "+ boardName);
 
 		//basic
-			if(kind.equals("basic")){
-				BoardPage boardPage = new BoardPage();
-				boardPage.setBoardName(boardName);
-				
-				HashMap<String, String> basic = boardDAOService.getBasicBoardList(boardName);
-				List<BasicBoard> pageBasic;
-				String pageNum = (String) request.getParameter("pageNum");
-				if(pageNum == null) pageNum = "1";
-				int pageNumInt = Integer.parseInt(pageNum);
-				
-				int cnt = Integer.parseInt(String.valueOf(basic.get("cnt")));
-				int endCnt = cnt / 10 + 1;
-				
-				if(pageNumInt == 1) {
-					if(endCnt == 1) boardPage.setStart(1);
-					else boardPage.setStart(cnt-9);
-					boardPage.setEnd(cnt);
-					pageBasic = boardDAOService.getBasicBoardPage(boardPage);
-					model.addAttribute("board", pageBasic);
-				} else {
-					boardPage.setEnd(cnt - ((pageNumInt-1)*10));
-					if(cnt - ((pageNumInt-1)*10) - 9 < 1) boardPage.setStart(1);
-					boardPage.setStart(cnt - ((pageNumInt-1)*10) - 9);
-					pageBasic = boardDAOService.getBasicBoardPage(boardPage);
-					model.addAttribute("board", pageBasic);
-				}
-				model.addAttribute("pageNumInt", pageNumInt);
-				model.addAttribute("entirePage", endCnt);
-			}
+		if(kind.equals("basic")) {
+			String searchOption = (String) request.getParameter("searchOption");
+			String search = (String) request.getParameter("search");
+			if(searchOption == null || searchOption.equals("")) searchOption = "null";
+			if(search == null || search.equals("")) search = "null";
+			basicBoard(request, model, boardName, searchOption, search);
+		}
 			//linear
 			//gride
 			
@@ -200,9 +184,82 @@ public class BasicController {
 			System.out.println("log in");
 			model.addAttribute("logNick", httpSession.getAttribute("signIn").toString());
 		}
-		
 	
 		return "index";
+	}
+	
+	//show basic board
+	public void basicBoard(HttpServletRequest request, Model model, String boardName, String searchOption, String search) {
+		BoardPage boardPage = new BoardPage();
+		List<BasicBoard> basicSearch = null;
+		boardPage.setBoardName(boardName);
+		int cnt = 0;
+		if(searchOption.equals("null") && search.equals("null")) {
+			HashMap<String, String> basic = boardDAOService.getBasicBoardList(boardName);
+			cnt = Integer.parseInt(String.valueOf(basic.get("cnt")));
+		}else {
+			boardPage.setSearchOption(searchOption);
+			boardPage.setSearch(search);
+			basicSearch = boardDAOService.getBasicBoardSearchCount(boardPage);
+			model.addAttribute("searchOption", searchOption);
+			model.addAttribute("search", search);
+		}
+		
+		List<BasicBoard> pageBasic = null;
+		String pageNum = (String) request.getParameter("pageNum");
+		if(pageNum == null) pageNum = "1";
+		int pageNumInt = Integer.parseInt(pageNum);
+		
+		int endCnt = 0;
+		
+		if(pageNumInt == 1) {
+			if(searchOption.equals("null") && search.equals("null")) {
+				if(cnt % 10 == 0) endCnt = cnt / 10;
+				else endCnt = cnt / 10 + 1;
+				if(endCnt == 1) boardPage.setStart(1);
+				else boardPage.setStart(cnt-9);
+				boardPage.setEnd(cnt);
+				pageBasic = boardDAOService.getBasicBoardPage(boardPage);
+			} else {
+			if(basicSearch.size() != 0) {
+				System.out.println(basicSearch.size());
+				if(basicSearch.size() % 10 == 0) endCnt = basicSearch.size() / 10;
+				else endCnt = basicSearch.size() / 10 + 1;
+				if(endCnt == 1) boardPage.setStart(1);
+				else boardPage.setStart(Integer.parseInt(basicSearch.get(9).getIdx()));
+				boardPage.setEnd(Integer.parseInt(basicSearch.get(0).getIdx()));
+				pageBasic = boardDAOService.getBasicBoardSearch(boardPage);
+			}
+			}
+			
+			model.addAttribute("board", pageBasic);
+		} else {
+			
+			if(searchOption.equals("null") && search.equals("null")) {
+				if(cnt % 10 == 0) endCnt = cnt / 10;
+				else endCnt = cnt / 10 + 1;
+				boardPage.setEnd(cnt - ((pageNumInt-1)*10));
+				if(cnt - ((pageNumInt-1)*10) - 9 < 1) boardPage.setStart(1);
+				else boardPage.setStart(cnt - ((pageNumInt-1)*10) - 9);
+				pageBasic = boardDAOService.getBasicBoardPage(boardPage);
+			} else {
+			if(basicSearch.size() != 0) {
+				if(basicSearch.size() % 10 == 0) endCnt = basicSearch.size() / 10;
+				else endCnt = basicSearch.size() / 10 + 1;
+				boardPage.setEnd(Integer.parseInt(basicSearch.get((pageNumInt-1)*10).getIdx()));
+				if((pageNumInt-1)*10 + 9 >= (basicSearch.size()-1)) boardPage.setStart(Integer.parseInt(basicSearch.get(basicSearch.size()-1).getIdx()));
+				else boardPage.setStart(Integer.parseInt(basicSearch.get((pageNumInt-1)*10 + 9).getIdx()));
+				pageBasic = boardDAOService.getBasicBoardSearch(boardPage);
+				System.out.println("start : "+Integer.parseInt(basicSearch.get((pageNumInt-1)*10).getIdx()));
+				System.out.println("end : "+Integer.parseInt(basicSearch.get(basicSearch.size()-1).getIdx()));
+				System.out.println("pageBasic : " + pageBasic.size());
+			}
+			}
+			
+			model.addAttribute("board", pageBasic);
+		}
+		model.addAttribute("pageNumInt", pageNumInt);
+		model.addAttribute("entirePage", endCnt);
 	}
 	
 	//send email

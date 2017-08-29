@@ -6,6 +6,6 @@
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-content
+	common_write
 </body>
 </html>

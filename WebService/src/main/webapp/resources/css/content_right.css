@@ -11,14 +11,13 @@
     border-bottom: 3px solid #444444;
     border-collapse: collapse;
     table-layout: fixed;
+    padding-bottom: 10px;
+    padding-top: 10px;
  }
  .common_board_tr {
     border-bottom: 3px double #444444;
  }
  
- .common_board_tr:HOVER {
- 	background-color: #444444;
- }
  .common_board_td {
  	padding-top: 10px;
  	padding-bottom: 10px;
