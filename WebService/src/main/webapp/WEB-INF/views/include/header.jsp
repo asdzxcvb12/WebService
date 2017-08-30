@@ -77,7 +77,8 @@
 	 		<a href="?cate=${topMenu}" class="menu">${topMenu}</a>
 	 	</c:forEach>
 	</p>
-	 
+<input type="hidden" id="getSessionResult" value="<%=session.getAttribute("signId")%>">
+<input type="hidden" id="getSessionResult" value="<%=session.getAttribute("signIn")%>">
 </body>
 </html>
 

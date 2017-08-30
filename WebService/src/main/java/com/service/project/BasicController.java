@@ -1,5 +1,6 @@
 package com.service.project;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ import com.service.model.En_De_criptionModulues;
 import com.service.database.BasicBoard;
 import com.service.database.BoardDAOService;
 import com.service.database.BoardPage;
+import com.service.database.Comment;
+import com.service.database.CommentSender;
 import com.service.database.Members;
 import com.service.database.MembersDAOService;
 import com.service.database.MembersLog;
@@ -43,7 +46,78 @@ public class BasicController {
 	@RequestMapping(value="/")
 	public String main_page(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
+		boardManage = new BoardManage();
+		Map<String, String> board;
+		
 		HttpSession httpSession = request.getSession();
+		
+		// boardWrite, boardContent
+		String boardFunction = (String) request.getParameter("boardKind");
+		String getContentCate = (String) request.getParameter("cate");
+		String getContentSubCate = (String) request.getParameter("subCate");
+		
+		// boardContent
+		String idx = (String) request.getParameter("idx");
+		if(idx != null && getContentCate != null && getContentSubCate != null) {
+			board = boardManage.boardManage(getContentCate, getContentSubCate);
+			String boardName = String.valueOf(board.get("name"));
+			
+			BoardPage boardPage = new BoardPage();
+			CommentSender commentSender = new CommentSender();
+			
+			boardPage.setBoardName(boardName);
+			boardPage.setStart(Integer.parseInt(idx)-1);
+			boardPage.setEnd(Integer.parseInt(idx)+1);
+			
+			commentSender.setIdx(idx);
+			commentSender.setBoard_name(boardName);
+			
+			List<BasicBoard> contentBoard = new ArrayList<BasicBoard>();
+			List<BasicBoard> basicBoard = boardDAOService.getBasicBoardContent(boardPage);
+			System.out.println("getBasicBoardContent : "+ basicBoard.size());
+			if(basicBoard.size() == 2) {
+				if(idx.equals("1")) {
+					contentBoard.add(null);
+					contentBoard.add(basicBoard.get(0));
+					contentBoard.add(basicBoard.get(1));
+				} else {
+					contentBoard.add(basicBoard.get(0));
+					contentBoard.add(basicBoard.get(1));
+					contentBoard.add(null);
+				}
+			} else {
+				contentBoard = basicBoard;
+			}
+			
+			List<Comment> comment = boardDAOService.getComment(commentSender);
+			System.out.println("getComment : "+ comment.size());
+			model.addAttribute("contentBoard", contentBoard);
+			model.addAttribute("comment", comment);
+		}
+		
+//		 boardWriteResult
+		String titleTextBox = (String) request.getParameter("titleTextBox"); // title
+		String resultContent = (String) request.getParameter("resultContent"); // content
+		String getBoardSubCate = (String) request.getParameter("getBoardSubCate"); //board Name
+		String getBoardCate = (String) request.getParameter("getBoardCate");
+		if(boardFunction == null) boardFunction = "null";
+		else model.addAttribute("boardKind", boardFunction);
+		
+		if(titleTextBox != null && getBoardSubCate != null && resultContent != null && getBoardCate != null){
+			board = boardManage.boardManage(getBoardCate, getBoardSubCate);
+			String kind = String.valueOf(board.get("kind"));
+			String boardName = String.valueOf(board.get("name"));
+			
+			if(kind.equals("basic")) {
+				HttpSession session = request.getSession();
+				BoardPage basicBoard = new BoardPage();
+				basicBoard.setBoardName(boardName);
+				basicBoard.setTitle(titleTextBox);
+				basicBoard.setWriter(String.valueOf(session.getAttribute("signIn")));
+				basicBoard.setContent(resultContent);
+				boardDAOService.insertBasicBoard(basicBoard);
+			}
+		} 
 		
 		// tabs
 		String cate = (String) request.getParameter("cate");
@@ -61,8 +135,7 @@ public class BasicController {
 		}
 		model.addAttribute("subCate", subCate);
 		//board
-		boardManage = new BoardManage();
-		Map<String, String> board = boardManage.boardManage(cate, subCate);
+		board = boardManage.boardManage(cate, subCate);
 		System.out.println("cate : " + cate);
 		System.out.println("subCate : " + subCate);
 		String kind = String.valueOf(board.get("kind"));
@@ -95,6 +168,7 @@ public class BasicController {
 		//SignUP
 		String logId = (String) request.getParameter("logEncriptId");
 		String logPassword = (String) request.getParameter("logEncriptPw");
+		String getId = null;
 		String getNick = null;
 		if(logId != null && logPassword != null) {
 			en_de_criptionModulues = new En_De_criptionModulues("log");
@@ -106,6 +180,7 @@ public class BasicController {
 			List<Members> members = membersDAOService.getMembersLog();
 			for(Members searchIdPw : members){
 				if(searchIdPw.getId().equals(logId) && searchIdPw.getPw().equals(logPassword)) {
+					getId = searchIdPw.getId();
 					getNick = searchIdPw.getNick();
 					flag = true;
 					break;
@@ -121,6 +196,7 @@ public class BasicController {
 				membersLog.setId(logId);
 				membersLog.setLog_address(ipAddress.getAddress());
 				membersDAOService.insertLog(membersLog);
+				httpSession.setAttribute("signId", getId);
 				httpSession.setAttribute("signIn", getNick);
 				response.getWriter().print("<script>alert('Welcome!! "+logId+"');</script>");
 			} else {
@@ -176,6 +252,7 @@ public class BasicController {
 		/* getSession sign out */
 		String signout = (String) request.getParameter("signout");
 		if(httpSession.getAttribute("signIn") != null && signout != null) {
+			httpSession.removeAttribute("signId");
 			httpSession.removeAttribute("signIn");
 		}
 		
@@ -261,6 +338,7 @@ public class BasicController {
 		model.addAttribute("pageNumInt", pageNumInt);
 		model.addAttribute("entirePage", endCnt);
 	}
+	
 	
 	//send email
 	@RequestMapping(value="/SendMail", method= RequestMethod.POST)
@@ -349,3 +427,4 @@ public class BasicController {
 		response.getWriter().print(getData);
 	}
 }
+

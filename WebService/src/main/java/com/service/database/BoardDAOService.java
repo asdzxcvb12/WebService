@@ -48,4 +48,31 @@ public class BoardDAOService implements BoardDAO {
 		return result;
 	}
 
+	@Override
+	public void insertBasicBoard(BoardPage boardPage) {
+		// TODO Auto-generated method stub
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		boardMapper.insertBasicBoard(boardPage);
+	}
+
+	@Override
+	public ArrayList<Comment> getComment(CommentSender commentSender) {
+		// TODO Auto-generated method stub
+		ArrayList<Comment> result = new ArrayList<Comment>();
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		result = boardMapper.getComment(commentSender);
+		
+		return result;
+	}
+
+	@Override
+	public ArrayList<BasicBoard> getBasicBoardContent(BoardPage boardPage) {
+		// TODO Auto-generated method stub
+		ArrayList<BasicBoard> result = new ArrayList<BasicBoard>();
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		result = boardMapper.getBasicBoardContent(boardPage);
+		
+		return result;
+	}
+
 }

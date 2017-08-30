@@ -8,6 +8,7 @@ public class BasicBoard {
 	private String fix_date;
 	private String recommended;
 	private String lookup;
+	private String content;
 	
 	public String getIdx() {
 		return idx;
@@ -50,6 +51,12 @@ public class BasicBoard {
 	}
 	public void setLookup(String lookup) {
 		this.lookup = lookup;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

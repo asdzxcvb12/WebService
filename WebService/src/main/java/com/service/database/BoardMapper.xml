@@ -13,22 +13,41 @@
 		<result property="fix_date" column="FIX_DATE" />
 		<result property="recommended" column="RECOMMENDED" />
 		<result property="lookup" column="LOOKUP" />
+		<result property="content" column="CONTENT" />
+	</resultMap>
+
+	<resultMap type="Comment" id="CommentAttrResultMap">
+		<result property="id" column="ID"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="con_comment" column="CON_COMMENT"/>
 	</resultMap>
 	
 	<select id="getBasicBoardCount" resultType="java.util.HashMap" parameterType="String">
 		SELECT COUNT(*) AS "cnt" FROM ${value}
 	</select>
 	
-	<select id="getBasicBoardPage" resultMap="BasicBoardAttrResultMap" parameterType="BoardPage">
+	<select id="getBasicBoardPage" resultMap="BasicBoardAttrResultMap" parameterType="com.service.database.BoardPage">
 		SELECT * FROM ${boardName} WHERE IDX BETWEEN ${start} AND ${end} ORDER BY IDX DESC
 	</select>
 	
-	<select id="getBasicBoardSearchCount" resultMap="BasicBoardAttrResultMap" parameterType="BoardPage">
+	<select id="getBasicBoardSearchCount" resultMap="BasicBoardAttrResultMap" parameterType="com.service.database.BoardPage">
 		SELECT idx FROM (SELECT * FROM ${boardName} ORDER BY IDX DESC) WHERE ${searchOption} LIKE '%${search}%'
 	</select>
 	
-	<select id="getBasicBoardSearch" resultMap="BasicBoardAttrResultMap" parameterType="BoardPage">
+	<select id="getBasicBoardSearch" resultMap="BasicBoardAttrResultMap" parameterType="com.service.database.BoardPage">
 		SELECT * FROM (SELECT * FROM (SELECT * FROM ${boardName} ORDER BY IDX DESC) WHERE ${searchOption} LIKE '%${search}%') WHERE IDX BETWEEN ${start} AND ${end}
 	</select>
 	
+	<select id="getBasicBoardContent" resultMap="BasicBoardAttrResultMap" parameterType="com.service.database.BoardPage">
+		SELECT * FROM ${boardName} WHERE IDX BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="getComment" resultMap="CommentAttrResultMap" parameterType="com.service.database.CommentSender">
+		SELECT ID, NICKNAME, CON_COMMENT FROM public_comment WHERE IDX = ${idx} AND BOARD_NAME = '${board_name}' ORDER BY INX
+	</select>
+	
+	<insert id="insertBasicBoard" parameterType="com.service.database.BoardPage">
+		INSERT INTO ${boardName}(TITLE, WRITER, CONTENT) 
+		VALUES(#{title}, #{writer}, #{content})
+	</insert>
 </mapper>

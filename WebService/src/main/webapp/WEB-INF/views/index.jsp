@@ -24,12 +24,18 @@
 	
 	<!-- jquery -->
 	<script type="text/javascript" src="resources/js/jquery/jquery-3.2.1.min.js"></script>
+	
+	<!-- naverAPI -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script type="text/javascript" src="resources/naverEditer/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+	
+	<!-- script -->
 	<script type="text/javascript" src="resources/js/header.js?ver=7"></script>
 	<script type="text/javascript" src="resources/js/content_left.js?ver=53"></script>
 	<script type="text/javascript" src="resources/js/membership_term.js?ver=13"></script>
 	<script type="text/javascript" src="resources/js/membership_info.js?ver=27"></script>
-	<script type="text/javascript" src="resources/js/basic_board.js?ver=13"></script>
+	<script type="text/javascript" src="resources/js/basic_board.js?ver=22"></script>
+	<script type="text/javascript" src="resources/js/board_write.js?ver=10"></script>
 </head>
 <body id="common_style" onload="javascript:go_time()">
 <div class="common_container">

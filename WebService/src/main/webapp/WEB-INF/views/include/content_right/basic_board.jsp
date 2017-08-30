@@ -116,6 +116,7 @@
 	</div>
 	<input type="hidden" id="basicBoardName" value="${subCate}">
 	<input type="hidden" id="cateName" value="${cate}">
+	<input type="hidden" id="getSessionBoard" value="<%=session.getAttribute("signIn")%>">
 </form>	
 </body>
 </html>
