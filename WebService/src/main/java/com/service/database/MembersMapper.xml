@@ -48,7 +48,7 @@
 	</select>
 	
 	<!-- INSERT MEMBERS -->
-	<insert id="insertMembers">
+	<insert id="insertMembers" parameterType="com.service.database.Members">
 		INSERT INTO MEMBERS(ID, PW, NICK, MAIL, PREFERENCE, ADDRESS) 
 		VALUES(#{id}, #{pw}, #{nick}, #{mail}, #{preference}, #{address})
 	</insert>

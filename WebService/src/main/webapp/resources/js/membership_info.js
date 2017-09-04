@@ -48,7 +48,7 @@ $(document).ready(function() {
 			alert('Please check your id');
 		} else {
 			$.ajax({
-				url: 'checkId',
+				url: '/project/checkId.do',
 				type: 'post',
 				data: sendIdCheck,
 				success: function(getData) {
@@ -159,7 +159,7 @@ $(document).ready(function() {
 			alert('Please check your nickname');
 		} else {
 			$.ajax({
-				url: 'checkNickName',
+				url: '/project/checkNickName.do',
 				type: 'post',
 				data: sendNickNameCheck,
 				success: function(getData) {

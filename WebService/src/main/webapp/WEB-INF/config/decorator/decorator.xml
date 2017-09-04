@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- default directory 설정 -->
+<decorators defaultdir="/WEB-INF/views/decorators">
+	<!-- decorators url pattern -->
+	<decorator name="defaultDeco" page="defaultDeco.jsp">
+		<pattern>/index/membership/*.do</pattern>
+		<pattern>/index/board/*.do</pattern>
+		<pattern>/index.do</pattern>
+	</decorator>
+	
+	<!-- none decorators url pattern -->
+	<excludes>
+		<pattern>/excludes/*</pattern>
+		<pattern>/index/membership/info/result.do</pattern>
+		<pattern>/index/signIn/result.do</pattern>
+		<pattern>/index/signOut/result.do</pattern>
+		<pattern>/index/board/write/result.do</pattern>
+	</excludes>
+</decorators>

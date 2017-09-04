@@ -10,7 +10,7 @@
 	<div align="center" style="width: 100%">
 		<table style="width: auto">
 			<tr align="center" style="margin-bottom: 10px; border-bottom: 3px dotted #444444; ">
-				<td colspan="3"><Strong style="font-size: 20px; margin-bottom: 20px;">-&nbsp;Board ${boardKind}&nbsp;-</Strong></td>
+				<td colspan="3"><Strong style="font-size: 20px; margin-bottom: 20px;">-&nbsp;Board Write&nbsp;-</Strong></td>
 			</tr>
 			
 			<tr><td colspan="3">&nbsp;</td></tr>
@@ -24,8 +24,7 @@
 				<td align="center">writer</td>
 				<td>::</td>
 				<td>
-					<%=session.getAttribute("signIn")%>
-					<input type="hidden" id="WirterTextBox" name="WirterTextBox" value="<%=session.getAttribute("signIn")%>">
+					${sessionScope.signNick}
 				</td>
 			</tr>
 			<tr>
@@ -38,7 +37,7 @@
 						nhn.husky.EZCreator.createInIFrame({
     					oAppRef: oEditors,
     					elPlaceHolder: "ir1",
-    					sSkinURI: "resources/naverEditer/se2.jsp",
+    					sSkinURI: "/project/resources/naverEditer/se2.jsp",
     					fCreator: "createSEditor2"
 					});
 					</script>
@@ -51,8 +50,9 @@
 				<td colspan="3">
 					<a id="boardWriteCancle" class="commonAtag" style="margin-right: 20px;">Cancle</a>
 					<a class="commonAtag" style="margin-left: 20px;" onclick="showHTML()">Submit</a>
-					<input type="hidden" id="getBoardCate" name="getBoardCate" value="${cate}">
-					<input type="hidden" id="getBoardSubCate" name="getBoardSubCate" value="${subCate}">
+					<input type="hidden" id="getBoardCate" name="cate" value="${cate}">
+					<input type="hidden" id="getBoardSubCate" name="subCate" value="${subCate}">
+					<input type="hidden" id="getBoardName" name="boardName" value="${boardName}">
 					<input type="hidden" id="resultContent" name="resultContent">
 				</td>
 			</tr>

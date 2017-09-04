@@ -51,7 +51,7 @@ $(document).ready(function() {
 		var sendData = {"email":email};
 		
 		$.ajax({
-			url: 'SendMail',
+			url: '/project/SendMail.do',
 			type: 'post',
 			data: sendData,
 			success: function(setValues) {
@@ -80,7 +80,7 @@ $(document).ready(function() {
 	//term 
 	$('#termNext').on('click', function() {
 		var infoMembership = $('#infoMembership');
-		infoMembership.attr('action', '?membership=info');
+		infoMembership.attr('action', '/project/index/membership/info.do');
 		infoMembership.attr('method', 'post');
 		infoMembership.submit();
 	});

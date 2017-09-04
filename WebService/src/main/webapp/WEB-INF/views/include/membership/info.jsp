@@ -6,7 +6,7 @@
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8;">
 </head>
 <body>
-<form id="membershipResult" action="." method="post">
+<form id="membershipResult" action="/project/index/membership/info/result.do" method="post">
 	<div align="center">
 	<strong style="font-size: 30px;">Membership Info</strong>
 		<table style="color: white; padding-top: 20px;">

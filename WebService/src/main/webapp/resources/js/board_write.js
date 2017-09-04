@@ -12,14 +12,12 @@ function showHTML() {
 	resultContent = resultContent.val();
 	
 	var titleTextBox = $('#titleTextBox').val();
-	var WirterTextBox = $('#WirterTextBox').val();
 	
-	if(resultContent.length > 0 && titleTextBox.length > 0 && WirterTextBox.length > 0) {
-		writeForm.attr('action', '?cate='+getBoardCate+'&subCate='+getBoardSubCate);
+	if(resultContent.length > 0 && titleTextBox.length > 0) {
+		writeForm.attr('action', '/project/index/board/write/result.do');
 		writeForm.attr('method', 'post');
-		alert('board resisted');
 		writeForm.submit();
-	} else alert('Please check your document\n'+resultContent+'\n'+titleTextBox+'\n'+WirterTextBox+'\n'+ir1);
+	} else alert('Please check your document\n'+resultContent+'\n'+titleTextBox+'\n'+ir1);
 }
 
 function submitContents(elClickedObj) {

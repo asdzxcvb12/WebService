@@ -32,7 +32,6 @@
 <br><!-- menu -->
 <div align="left">
 		<fieldset class="basicField">
-		
 			<c:if test="${cate == 'null'}"><c:set var="cate" value="${zeroTop}" /></c:if>
 				<legend align="top" style="font-size: 20px; font-style: bold; text-align: center"><b>${cate}</b></legend>
 
@@ -47,7 +46,7 @@
 								test="${subMenu.get(cate).getClass().getSimpleName() eq 'HashMap'}">
 								<c:set value="${subMenu.get(cate)}" var="sideSubMenu" />
 								<c:if test="${sideSubMenu.get(sideMenu.get(cate)) != null}">
-									<li style="margin-left: 30px"><a href="?cate=${cate}&subCate=${sideSubMenu.get(sideMenu.get(cate))}" class="sideMenuAtag">
+									<li style="margin-left: 30px"><a href="/project/index.do?cate=${cate}&subCate=${sideSubMenu.get(sideMenu.get(cate))}" class="sideMenuAtag">
 											${sideSubMenu.get(sideMenu.get(cate))}</a></li>
 								</c:if>
 							</c:when>
@@ -56,7 +55,7 @@
 								test="${subMenu.get(cate).getClass().getSimpleName() ne 'HashMap'}">
 								<c:if test="${sideStatus.first}">
 									<c:if test="${subMenu.get(cate) != null}">
-										<li><a style="text-align: center" href="?cate=${menu}&subCate=${subMenu.get(cate)}" class="sideMenuAtag">${subMenu.get(cate)}</a></li>
+										<li><a style="text-align: center" href="/project/index.do?cate=${menu}&subCate=${subMenu.get(cate)}" class="sideMenuAtag">${subMenu.get(cate)}</a></li>
 									</c:if>
 								</c:if>
 							</c:when>
@@ -64,7 +63,6 @@
 					</c:forEach>
 					</nav>
 				</c:forEach>
-				
 	</fieldset>
 </div>
 

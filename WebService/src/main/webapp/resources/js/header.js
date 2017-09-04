@@ -40,8 +40,9 @@ function wrapWindowByMask(){
             $(this).hide();
             $('.window').hide();
         });
- 
-        //SIGN IN BUTTON
+        
+        
+  /*      //SIGN IN BUTTON
         $('#signInBtn').on('click', function() {
         	
         	var sendData = {'rsa':'rsa'};
@@ -57,7 +58,7 @@ function wrapWindowByMask(){
         			b.val(result.b);
         		}
         	});
-        });
+        });*/
  
  //LOGIN BUTTON       
         $('#logBtn').on('click', function() {
@@ -76,7 +77,7 @@ function wrapWindowByMask(){
     		var ws = logId.val().search(/\s/);
     		var sws = logPassword.val().search(/\s/);
     		
-        	if(logId.val().length < 7 || logPassword.val().length < 10 || 
+        	if(logId.val().length < 7 || logPassword.val().length < 8 || 
         			hangle >= 0 || spe >= 0 || ws >= 0 || sws >= 0) {
         			alert('Please check your id / password');
         	} else {

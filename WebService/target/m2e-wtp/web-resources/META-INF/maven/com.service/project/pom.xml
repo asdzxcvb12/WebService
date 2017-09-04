@@ -162,6 +162,15 @@
     		<artifactId>ojdbc6</artifactId>
     		<version>11.2.0.3</version>
 		</dependency>
+		
+		<!-- sitemash -->
+		<dependency>
+    		<groupId>opensymphony</groupId>
+    		<artifactId>sitemesh</artifactId>
+    		<version>2.4.2</version>
+		</dependency>
+
+
 	</dependencies>
     <build>
         <plugins>

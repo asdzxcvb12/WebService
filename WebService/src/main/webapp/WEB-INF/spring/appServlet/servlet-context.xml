@@ -10,7 +10,9 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<context:component-scan base-package="com.service.project" />
+	<context:component-scan base-package="com.service.service"/>
+	<annotation-driven/>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -21,8 +23,29 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.service.project" />
+	<beans:bean id="commons" class="com.service.service.Commons">
+    </beans:bean>
 	
+	<beans:bean id="sessionChk" class="com.service.service.SessionCheck">
+	</beans:bean>
 	
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/index.do"/>
+			<mapping path="/index/membership/signInUp.do"/>
+			<mapping path="/index/membership/term.do"/>
+			<mapping path="/index/membership/info.do"/>
+			<mapping path="/index/board/content.do"/>
+			<mapping path="/index/board/write.do" />
+			<beans:ref bean="commons"/>
+		</interceptor>
+	</interceptors>	
+	<interceptors>
+		<interceptor>
+			<mapping path="/index/signOut/result.do" />
+			<mapping path="/index/board/write.do" />
+			<mapping path="/index/board/write/result.do" />
+			<beans:ref bean="sessionChk"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>

@@ -11,7 +11,7 @@ function basicContent(getIdx) {
 	var cateName = $('#cateName').val();
 	var basicBoardName = $('#basicBoardName').val();
 	
-	location.href = '.?cate='+cateName+'&subCate='+basicBoardName+'&boardKind=content&idx='+getIdx;
+	location.href = 'index/board/content.do?cate='+cateName+'&subCate='+basicBoardName+'&idx='+getIdx;
 }
 $(document).ready(function() {
 	
@@ -30,20 +30,13 @@ $(document).ready(function() {
 		var selectOption = $('#selectOption').val();
 		var searchContent = $('#searchContent').val();
 		
-		var locationGetPosition = $(location).attr('search');
-		
 		var getName = changeOptionName(selectOption);
 		
-		location.href = ".?cate="+cateName+"&subCate"+basicBoardName+"&searchOption="+getName+"&search="+searchContent;
+		location.href = "index.do?cate="+cateName+"&subCate"+basicBoardName+"&searchOption="+getName+"&search="+searchContent;
 	});
 	
 	$('#basicBoardWrite').on('click', function() {
-		var basicBoardName = $('#basicBoardName').val();
-		var cateName = $('#cateName').val();
-		
-		var getSessionBoard = $('#getSessionBoard').val();
-		if(getSessionBoard == 'null') alert('you need login');
-		else location.href = ".?cate="+cateName+"&subCate="+basicBoardName+"&boardKind=write";
+		$('#boardWriteForm').submit();
 	});
 	
 });

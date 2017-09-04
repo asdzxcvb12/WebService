@@ -6,7 +6,7 @@
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-<form>
+
 	<div align="center" style="width: 100%;">
 	<Strong style="font-size: 25px;">-&nbsp;${subCate}&nbsp;-</Strong>
 		<table style="width: 100%;" id="common_board">
@@ -105,18 +105,18 @@
 			</tr>
 		</table>
 	</div>
+<form id="boardWriteForm" action="index/board/write.do" method="post">
 	<div style="height: 30px; vertical-align: center" align="right">
 		<select id="selectOption">
 			<option>제목</option>
 			<option>작성자</option>
 		</select>
 		<input id="searchContent"type="text" size="15px">
-		<a id="basicBoardSearch" class="commonAtag" style="margin-right:20px;">SEARCH</a>
-		<a id="basicBoardWrite" class="commonAtag" style="margin-right:5px;">WRITE</a>
+			<a id="basicBoardSearch" class="commonAtag" style="margin-right:20px;">SEARCH</a>
+			<a id="basicBoardWrite" class="commonAtag" style="margin-right:5px;">WRITE</a>
 	</div>
-	<input type="hidden" id="basicBoardName" value="${subCate}">
-	<input type="hidden" id="cateName" value="${cate}">
-	<input type="hidden" id="getSessionBoard" value="<%=session.getAttribute("signIn")%>">
+	<input type="hidden" id="basicBoardName" name="subCate" value="${subCate}">
+	<input type="hidden" id="cateName" name="cate" value="${cate}">
 </form>	
 </body>
 </html>
