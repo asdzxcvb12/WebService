@@ -1,4 +1,7 @@
 #footer {
-	background-color: orange;
 	clear: both;
+	height: 50px;
+	border-top: medium double white;
+	line-height: 30px;
+	font-size: 15px;
 }

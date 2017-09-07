@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="/project/resources/css/content.css?ver=11">
 	<link rel="stylesheet" type="text/css" href="/project/resources/css/content_left.css?ver=12">
 	<link rel="stylesheet" type="text/css" href="/project/resources/css/content_right.css?ver=24">
-	<link rel="stylesheet" type="text/css" href="/project/resources/css/footer.css?ver=3">
+	<link rel="stylesheet" type="text/css" href="/project/resources/css/footer.css?ver=10">
 	<link rel="stylesheet" type="text/css" href="/project/resources/css/membership.css?ver=13">
 	
 	<!-- rsa -->
@@ -35,11 +35,11 @@
 	<script type="text/javascript" src="/project/resources/naverEditer/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 	
 	<!-- script -->
-	<script type="text/javascript" src="/project/resources/js/header.js?ver=14"></script>
-	<script type="text/javascript" src="/project/resources/js/content_left.js?ver=54"></script>
+	<script type="text/javascript" src="/project/resources/js/header.js?ver=15"></script>
+	<script type="text/javascript" src="/project/resources/js/content_left.js?ver=59"></script>
 	<script type="text/javascript" src="/project/resources/js/membership_term.js?ver=14"></script>
 	<script type="text/javascript" src="/project/resources/js/membership_info.js?ver=28"></script>
-	<script type="text/javascript" src="/project/resources/js/basic_board.js?ver=24"></script>
+	<script type="text/javascript" src="/project/resources/js/basic_board.js?ver=44"></script>
 	<script type="text/javascript" src="/project/resources/js/board_write.js?ver=12"></script>
 </head>
 <body id="common_style" onload="go_time()">

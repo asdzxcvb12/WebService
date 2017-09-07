@@ -46,8 +46,16 @@
 								test="${subMenu.get(cate).getClass().getSimpleName() eq 'HashMap'}">
 								<c:set value="${subMenu.get(cate)}" var="sideSubMenu" />
 								<c:if test="${sideSubMenu.get(sideMenu.get(cate)) != null}">
-									<li style="margin-left: 30px"><a href="/project/index.do?cate=${cate}&subCate=${sideSubMenu.get(sideMenu.get(cate))}" class="sideMenuAtag">
+									<c:choose>
+										<c:when test="${sideSubMenu.get(sideMenu.get(cate)) == 'PrivateBoard'}">
+											<li style="margin-left: 30px"><a class="sideMenuAtag" onclick="privateTag('${cate}', '${sideSubMenu.get(sideMenu.get(cate))}')">
 											${sideSubMenu.get(sideMenu.get(cate))}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li style="margin-left: 30px"><a href="/project/index.do?cate=${cate}&subCate=${sideSubMenu.get(sideMenu.get(cate))}" class="sideMenuAtag">
+											${sideSubMenu.get(sideMenu.get(cate))}</a></li>
+										</c:otherwise>
+									</c:choose>
 								</c:if>
 							</c:when>
 
@@ -55,7 +63,17 @@
 								test="${subMenu.get(cate).getClass().getSimpleName() ne 'HashMap'}">
 								<c:if test="${sideStatus.first}">
 									<c:if test="${subMenu.get(cate) != null}">
-										<li><a style="text-align: center" href="/project/index.do?cate=${menu}&subCate=${subMenu.get(cate)}" class="sideMenuAtag">${subMenu.get(cate)}</a></li>
+										<li>
+										<c:choose>
+											<c:when test="${subMenu.get(cate) == 'PrivateBoard'}">
+												<a style="text-align: center" class="sideMenuAtag" onclick="privateTag('${cate}', '${sideSubMenu.get(sideMenu.get(cate))}')">${subMenu.get(cate)}</a>
+											</c:when>
+											<c:otherwise>
+												<a style="text-align: center" class="sideMenuAtag" 
+												href="/project/index.do?cate=${menu}&subCate=${subMenu.get(cate)}">${subMenu.get(cate)}</a>
+											</c:otherwise>
+										</c:choose>
+										</li>
 									</c:if>
 								</c:if>
 							</c:when>

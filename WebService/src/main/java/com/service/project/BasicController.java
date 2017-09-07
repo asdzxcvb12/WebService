@@ -1,8 +1,10 @@
 package com.service.project;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.service.model.SendEmail;
 import com.service.model.ConfirmEmailCode;
@@ -23,9 +28,12 @@ import com.service.database.BoardDAOService;
 import com.service.database.BoardPage;
 import com.service.database.Comment;
 import com.service.database.CommentSender;
+import com.service.database.Img;
+import com.service.database.ImgSender;
 import com.service.database.Members;
 import com.service.database.MembersDAOService;
 import com.service.database.MembersLog;
+import com.service.database.RecommendedSender;
 
 @Controller 	
 public class BasicController {
@@ -42,8 +50,9 @@ public class BasicController {
 		String returnPage = null;
 
 		String cate = (String) request.getAttribute("cate");
+		String subCate = (String) request.getParameter("subCate");
+		if(subCate == null) subCate = "";
 		String boardName = (String) request.getAttribute("boardName");
-		
 		//board--
 		//if search-----
 			String searchOption = (String) request.getParameter("searchOption");
@@ -52,17 +61,43 @@ public class BasicController {
 		if(searchOption == null || searchOption.equals("")) searchOption = "null";
 		if(search == null || search.equals("")) search = "null";
 		
-		if(cate.equals("LANGUAGE")) {
-			returnPage = "index";
-		} else if(cate.equals("GALLARY")) {
-			returnPage = "index";
-		} else if(cate.equals("BOARD")) {
+		if(cate.equals("LANGUAGE") || cate.equals("BOARD")) {
 			basicBoard(request, model, boardName, searchOption, search);
-			
 			returnPage = "include/content_right/basic_board";
+		} else if(cate.equals("GALLARY")) {
+			String imgPage = request.getParameter("imgPage");
+			if(imgPage == null || imgPage.equals("")) imgPage = "1";
+			int imgIntPage = Integer.parseInt(imgPage);
+			int imgMaxPage = 0;
+			List<Img> resultImg = new ArrayList<Img>();
+			List<Img> img = boardDAOService.getImg();
+			
+			if(img.size() <= 9 && imgIntPage == 1) {
+				imgMaxPage = 1;
+				resultImg = img;
+			} else {
+				for(int start = (imgIntPage-1)*9+1; start<imgIntPage*9; start++) {
+					resultImg.add(img.get(start));
+				}
+				imgMaxPage = img.size() / 9;
+			}
+			System.out.println("1"+resultImg.size());
+			System.out.println("2"+resultImg.get(0).getImg());
+			model.addAttribute("img", resultImg);
+			model.addAttribute("imgMaxPage", imgMaxPage);
+			returnPage = "include/content_right/picture";
 		} else if(cate.equals("NOTICE")) {
-			returnPage = "index";
+			if(subCate.equals("ContactDeveloper")) returnPage = "include/content_right/ContactDeveloper";
+			else returnPage = "index";
 		} else {
+			List<BasicBoard> lookUpRank = boardDAOService.getLookupRank();
+			List<BasicBoard> recommendedRank = boardDAOService.getRecommendedRank();
+			List<BasicBoard> writerRank = boardDAOService.getWriterRank();
+			List<BasicBoard> createDateRank = boardDAOService.getCreateDateRank();
+			model.addAttribute("lookUpRank", lookUpRank);
+			model.addAttribute("recommendedRank", recommendedRank);
+			model.addAttribute("writerRank", writerRank);
+			model.addAttribute("createDateRank", createDateRank);
 			returnPage = "index";
 		}
 		return returnPage;
@@ -198,10 +233,14 @@ public class BasicController {
 		
 		String idx = (String) request.getParameter("idx");
 		if(idx != null && getContentCate != null && getContentSubCate != null) {
-			
 			BoardPage boardPage = new BoardPage();
+			boardPage.setIdx(idx);
+			boardPage.setBoardName(boardName);
+			boardDAOService.contentLookUp(boardPage);
+			
 			CommentSender commentSender = new CommentSender();
 			
+			boardPage = new BoardPage();
 			boardPage.setBoardName(boardName);
 			boardPage.setStart(Integer.parseInt(idx)-1);
 			boardPage.setEnd(Integer.parseInt(idx)+1);
@@ -226,8 +265,11 @@ public class BasicController {
 				contentBoard = basicBoard;
 			}
 			
-			List<Comment> comment = boardDAOService.getComment(commentSender);
-			System.out.println("getComment : "+ comment.size());
+			List<Comment> comment = null;
+			comment = boardDAOService.getComment(commentSender);
+			
+			if(comment == null) System.out.println("comment null");
+			else System.out.println(comment.size());
 			model.addAttribute("contentBoard", contentBoard);
 			model.addAttribute("comment", comment);
 		}
@@ -245,9 +287,9 @@ public class BasicController {
 	public String boardWriteResult(HttpServletRequest request, Model model) {
 		String titleTextBox = (String) request.getParameter("titleTextBox"); // title
 		String resultContent = (String) request.getParameter("resultContent"); // content
-		String getBoardCate = (String) request.getParameter("cate");
-		String getBoardSubCate = (String) request.getParameter("subCate");
-		String boardName = (String) request.getParameter("boardName");
+		String getBoardCate = (String) request.getParameter("cateW");
+		String getBoardSubCate = (String) request.getParameter("subCateW");
+		String boardName = (String) request.getParameter("boardNameW");
 		System.out.println(titleTextBox+"\n"+resultContent+"\n"+getBoardCate+"\n"+getBoardSubCate+"\n"+boardName);
 		if(titleTextBox != null && getBoardSubCate != null && resultContent != null && getBoardCate != null){
 			if(getBoardCate.equals("BOARD")) {
@@ -261,6 +303,8 @@ public class BasicController {
 			}
 		} 
 		model.addAttribute("resultParam", "writeResult");
+		model.addAttribute("cate", getBoardCate);
+		model.addAttribute("subCate", getBoardSubCate);
 		return "result";
 	}
 	//show basic board
@@ -410,6 +454,149 @@ public class BasicController {
 		
 		response.getWriter().print(getData);
 	}
+	
+	// authority chk
+	@RequestMapping(value="/authorityCheck", method=RequestMethod.POST)
+	public void authorityCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("in");
+		HttpSession session = request.getSession();
+		String sessionID = (String) session.getAttribute("signId");
+		String result = null;
+		System.out.println(sessionID);
+		if(sessionID == null) {
+			result = "{\"result\":\"fail\"}";
+		} else {
+			String authority = membersDAOService.getMembersAuthority(sessionID);
+			if(authority.equals("king") || authority.equals("chief")) {
+				result = "{\"result\":\"positive\"}";
+			} else result = "{\"result\":\"negative\"}";
+		}
+		
+		response.getWriter().println(result);
+	}
+	
+	// content Update
+	@RequestMapping(value="/contentUpdate", method=RequestMethod.POST)
+	public void contentUpdate() {
+	}
+	// comment update
+	@RequestMapping(value="/commentInsert", method=RequestMethod.POST)
+	public void commentInsert(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		String idx = request.getParameter("getIDX");
+		String board_name = request.getParameter("boardName");
+		String con_comment = request.getParameter("commentText");
+		String id = (String) session.getAttribute("signId");
+		String nickname = (String) session.getAttribute("signNick");
+		
+		CommentSender commentSender = new CommentSender();
+		commentSender.setBoard_name(board_name);
+		commentSender.setCon_comment(con_comment);
+		commentSender.setId(id);
+		commentSender.setIdx(idx);
+		commentSender.setNickname(nickname);
+		
+		boardDAOService.insertComment(commentSender);
+		
+		response.getWriter().println("{\"result\":\"done\"}");
+	}
+	//comment delete
+	@RequestMapping(value="/commentDelete", method=RequestMethod.POST)
+	public void commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String inx = request.getParameter("inx");
+		String board_name = request.getParameter("board_name");
+		
+		CommentSender commentSender = new CommentSender();
+		commentSender.setInx(inx);
+		commentSender.setBoard_name(board_name);
+		
+		boardDAOService.deleteComment(commentSender);
+		
+		response.getWriter().println("{\"result\":\"done\"}");
+	}
+	//recommended
+	@RequestMapping(value="/recommended", method=RequestMethod.POST)
+	public void recommended(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String msg = null;
+		String plus_minus = request.getParameter("action");
+		String idx = request.getParameter("idx");
+		String board_name = request.getParameter("board_name");
+		String id = (String) session.getAttribute("signId");
+		
+		RecommendedSender recommendedSender = new RecommendedSender();
+		recommendedSender.setBoard_name(board_name);
+		recommendedSender.setIdx(idx);
+		recommendedSender.setId(id);
+		recommendedSender.setPlus_minus(plus_minus);
+		System.out.println("idx:"+idx+"\nboard_name:"+board_name+"\nid:"+id);
+		
+		String result = boardDAOService.getRecommendedAttr(recommendedSender);
+		
+		System.out.println("idx:"+idx+"\nboard_name:"+board_name+"\nid:"+id+"\naction"+plus_minus);
+		if(result == null) {
+			if(plus_minus.equals("up")) boardDAOService.plusRecommended(recommendedSender);
+			else if(plus_minus.equals("down")) boardDAOService.minusRecommended(recommendedSender);
+			boardDAOService.insertRecommended(recommendedSender);
+			msg = "done";
+		} else {
+			msg = "you been already done";
+		}
+		response.getWriter().println("{\"msg\":\""+msg+"\"}");
+	}
+	
+	@RequestMapping(value="/deleteBoardContent", method=RequestMethod.POST)
+	public void deleteBoardContent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String cate = request.getParameter("cate");
+		String subCate = request.getParameter("subCate");
+		String idxDel = request.getParameter("idxDel");
+		String getBoName = request.getParameter("getBoName");
+		
+		BoardPage boardPage = new BoardPage();
+		
+		boardPage.setBoardName(getBoName);
+		boardPage.setIdx(idxDel);
+		boardDAOService.deleteBoardContent(boardPage);
+		
+		response.getWriter().print("<script>alert('delete!');location.href = '/project/index.do?cate="+cate+"&subCate="+subCate+"';</script>");
+	}
+	
+	@RequestMapping(value="/fileUpLoad", method=RequestMethod.POST)
+	public String fileUpLoad(MultipartHttpServletRequest requestM, Model model, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		HttpSession session = request.getSession();
+		
+		String nick = (String) session.getAttribute("signNick");
+		String cate = request.getParameter("cate");
+		String subCate = request.getParameter("subCate");
+		
+		Map<String, MultipartFile> files = requestM.getFileMap();
+		CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("uploadFile");
+
+		String path = "C:/Users/ghangsub/git/WebService/WebService/src/main/webapp/resources/img/upload/"+cmf.getOriginalFilename();
+		
+		ImgSender imgSender = new ImgSender();
+		imgSender.setImg(cmf.getOriginalFilename());
+		imgSender.setWriter(nick);
+		
+		boardDAOService.insertImg(imgSender);
+		
+		File file = new File(path);
+		
+		cmf.transferTo(file);
+		
+		
+		model.addAttribute("cate", cate);
+		
+		model.addAttribute("subCate", subCate);
+		model.addAttribute("resultParam", "img");
+		return "result";
+
+	}
 }
+
+
+
 
 

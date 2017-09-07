@@ -9,6 +9,8 @@ public class BasicBoard {
 	private String recommended;
 	private String lookup;
 	private String content;
+	private String board_name;
+	private String count;
 	
 	public String getIdx() {
 		return idx;
@@ -58,5 +60,18 @@ public class BasicBoard {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getBoard_name() {
+		return board_name;
+	}
+	public void setBoard_name(String board_name) {
+		this.board_name = board_name;
+	}
+	public String getCount() {
+		return count;
+	}
+	public void setCount(String count) {
+		this.count = count;
+	}
+	
 	
 }

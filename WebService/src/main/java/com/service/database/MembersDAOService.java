@@ -74,4 +74,13 @@ public class MembersDAOService implements MembersDAO{
 		membersMapper.insertMembersLog(membersLog);
 	}
 
+	@Override
+	public String getMembersAuthority(String id) {
+		// TODO Auto-generated method stub
+		MembersMapper membersMapper = sqlSession.getMapper(MembersMapper.class);
+		String result = membersMapper.getMembersAuthority(id);
+		
+		return result;
+	}
+
 }

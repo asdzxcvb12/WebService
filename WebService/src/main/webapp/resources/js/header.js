@@ -20,14 +20,14 @@ function wrapWindowByMask(){
         // 레이어 팝업을 띄웁니다.
         $('.window').show();
     }
+
+function clickImg(){
+    // preventDefault는 href의 링크 기본 행동을 막는 기능입니다.
+    wrapWindowByMask();
+}
  
     $(document).ready(function(){
         // showMask를 클릭시 작동하며 검은 마스크 배경과 레이어 팝업을 띄웁니다.
-        $('.showMask').click(function(e){
-            // preventDefault는 href의 링크 기본 행동을 막는 기능입니다.
-            e.preventDefault();
-            wrapWindowByMask();
-        });
  
         // 닫기(close)를 눌렀을 때 작동합니다.
         $('.window .close').click(function (e) {

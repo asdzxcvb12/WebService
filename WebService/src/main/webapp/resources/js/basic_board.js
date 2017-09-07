@@ -1,4 +1,38 @@
+function recommendedBtn(action, idx, board_name) {
+	var currentURL = $(location).attr('search');
+	var sessionIdget = $('#sessionIdget').val();
+	var sendData = {'action':action,'idx':idx,'board_name':board_name};
 
+	if(sessionIdget == '') {
+		alert('you need signIn');
+	} else {
+		$.ajax({
+			url: '/project/recommended.do',
+			type: 'post',
+			data: sendData,
+			success: function(getData) {
+				var result = JSON.parse(getData);
+				alert(result.msg);
+				location.href = '/project/index/board/content.do'+currentURL;
+			}
+		});
+	}
+}
+
+function commentDelete(inx, board_name) {
+	var currentURL = $(location).attr('search');
+	var sendData = {'inx':inx,'board_name':board_name};
+	
+	$.ajax({
+		url: '/project/commentDelete.do',
+		type: 'post',
+		data: sendData,
+		success: function(result) {
+			alert('delete complete');
+			location.href = '/project/index/board/content.do'+currentURL;
+		}
+	});
+}
 function changeOptionName(getName) {
 	var get = getName;
 	var trans;
@@ -7,12 +41,10 @@ function changeOptionName(getName) {
 	return trans;
 }
 
-function basicContent(getIdx) {
-	var cateName = $('#cateName').val();
-	var basicBoardName = $('#basicBoardName').val();
-	
-	location.href = 'index/board/content.do?cate='+cateName+'&subCate='+basicBoardName+'&idx='+getIdx;
+function basicContent(cate, subCate, getIdx) {
+	location.href = '/project/index/board/content.do?cate='+cate+'&subCate='+subCate+'&idx='+getIdx;
 }
+
 $(document).ready(function() {
 	
 	var getLocationUrl = $(location).attr('search');
@@ -23,6 +55,19 @@ $(document).ready(function() {
 			alert('wrong path\nsign up Please');
 		}
 	}
+	
+	var fixContent = $('#fixContent');
+	var deleteContent = $('#deleteContent');
+	var showItems = $('#showItems').val();
+	
+	if(showItems == 'yes') {
+		fixContent.css({'display':'inline'});
+		deleteContent.css({'display':'inline'});
+	} else if(showItems == 'no') {
+		fixContent.css('display', 'none');
+		deleteContent.css('display', 'none');
+	}
+	
 	
 	$('#basicBoardSearch').on('click', function() {
 		var cateName = $('#cateName').val();
@@ -39,4 +84,44 @@ $(document).ready(function() {
 		$('#boardWriteForm').submit();
 	});
 	
+	$('#commentInsert').on('click', function() {
+		var sessionNickget = $('#sessionNickget').val();
+		var commentText = $('#commentText').val();
+		
+		if(sessionNickget == '' || commentText.length < 1) {
+			alert('check form or signIn plz');
+		} else {
+			var currentURL = $(location).attr('search');
+			var getIDX = $('#getIDX').text();
+			var getBoName = $('#getBoName').val();
+			var sendData = {'boardName':getBoName,'getIDX':getIDX,'commentText':commentText};
+			$.ajax({
+				url: '/project/commentInsert.do',
+				type: 'post',
+				data: sendData,
+				success: function(getData) {
+					alert('Done');
+					location.href = '/project/index/board/content.do'+currentURL;
+				}
+			});
+		}
+	});
+	
+	$('#imgFormSubmit').on('click', function() {
+		var inserForm = $('#inserForm');
+		var imgCate = $('#imgCate').val();
+		var imgSubCate = $('#imgSubCate').val();
+		var imgSession = $('#imgSession').val();
+		
+		if(imgSession == '') {
+			alert('you need signIn');
+		} else {
+			inserForm.submit();
+		}
+	});
+	
+	$('#deleteCon').on('click', function() {
+		var deleteForm = $('#deleteForm');
+		deleteForm.submit();
+	});
 });

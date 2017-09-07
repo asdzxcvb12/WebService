@@ -23,6 +23,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- MultipartResolver -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000000"/>
+		<beans:property name="maxInMemorySize" value="100000000"/>
+	</beans:bean>
+
 	<beans:bean id="commons" class="com.service.service.Commons">
     </beans:bean>
 	

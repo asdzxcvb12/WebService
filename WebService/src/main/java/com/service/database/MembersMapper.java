@@ -10,4 +10,5 @@ public interface MembersMapper {
 	ArrayList<Members> getMembersLog();
 	void insertMembers(Members members);
 	void insertMembersLog(MembersLog membersLog);
+	public String getMembersAuthority(String id);
 }

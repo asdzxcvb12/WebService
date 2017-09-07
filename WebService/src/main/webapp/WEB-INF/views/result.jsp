@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 	<script type="text/javascript">
-		function result(param) {
+		function result(param, cate, subCate) {
 			if(param == 'logYes') {
 				alert('Welcome');
 				location.href = "/project/index.do";
@@ -16,17 +16,16 @@
 				alert('Welcome to join us');
 				location.href = "/project/index.do";
 			} else if(param == 'writeResult') {
-				var cate = document.getElementById('cate').value;
-				var subCate = document.getElementById('subCate');
 				alert('resist!!');
+				location.href = "/project/index.do?cate="+cate+"&subCate="+subCate;
+			} else if(param == 'img') {
+				alert('upload done');
 				location.href = "/project/index.do?cate="+cate+"&subCate="+subCate;
 			}
 			else location.href = "/project/index.do";		
 		}	
 	</script>
 </head>
-<body onload="result('${resultParam}')">
-<input type="hidden" id="cate" value="${cate}">
-<input type="hidden" id="subCate" value="${subCate}">
+<body onload="result('${resultParam}', '${cate}', '${subCate}')">
 </body>
 </html>

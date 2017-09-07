@@ -14,12 +14,22 @@
 		<result property="recommended" column="RECOMMENDED" />
 		<result property="lookup" column="LOOKUP" />
 		<result property="content" column="CONTENT" />
+		<result property="board_name" column="BOARD_NAME" />
 	</resultMap>
 
 	<resultMap type="Comment" id="CommentAttrResultMap">
+		<result property="inx" column="INX" />
 		<result property="id" column="ID"/>
 		<result property="nickname" column="NICKNAME"/>
 		<result property="con_comment" column="CON_COMMENT"/>
+		<result property="board_name" column="BOARD_NAME"/>
+	</resultMap>
+	
+	<resultMap type="Img" id="ImgAttrResultMap">
+		<result property="idx" column="IDX"/>
+		<result property="writer" column="WRITER"/>
+		<result property="img" column="IMG"/>
+		<result property="create_date" column="CREATE_DATE"/>
 	</resultMap>
 	
 	<select id="getBasicBoardCount" resultType="java.util.HashMap" parameterType="String">
@@ -39,15 +49,147 @@
 	</select>
 	
 	<select id="getBasicBoardContent" resultMap="BasicBoardAttrResultMap" parameterType="com.service.database.BoardPage">
-		SELECT * FROM ${boardName} WHERE IDX BETWEEN #{start} AND #{end}
+		SELECT * FROM ${boardName} WHERE IDX BETWEEN #{start} AND #{end} ORDER BY IDX
 	</select>
 	
 	<select id="getComment" resultMap="CommentAttrResultMap" parameterType="com.service.database.CommentSender">
-		SELECT ID, NICKNAME, CON_COMMENT FROM public_comment WHERE IDX = ${idx} AND BOARD_NAME = '${board_name}' ORDER BY INX
+		SELECT INX, ID, NICKNAME, CON_COMMENT, BOARD_NAME FROM public_comment WHERE IDX = ${idx} AND BOARD_NAME = '${board_name}' ORDER BY INX
 	</select>
+	
+	<insert id="insertComment" parameterType="com.service.database.CommentSender">
+		INSERT INTO PUBLIC_COMMENT(IDX, BOARD_NAME, ID, NICKNAME, CON_COMMENT) 
+		VALUES(#{idx}, #{board_name}, #{id}, #{nickname}, #{con_comment})
+	</insert>
+	
+	<delete id="deleteComment" parameterType="com.service.database.CommentSender">
+		DELETE PUBLIC_COMMENT WHERE INX = #{inx} AND BOARD_NAME = #{board_name}
+	</delete>
+	
+	<update id="contentLookUp" parameterType="com.service.database.BasicBoard">
+		UPDATE ${boardName} SET LOOKUP = LOOKUP + 1 WHERE IDX = ${idx}
+	</update>
 	
 	<insert id="insertBasicBoard" parameterType="com.service.database.BoardPage">
 		INSERT INTO ${boardName}(TITLE, WRITER, CONTENT) 
 		VALUES(#{title}, #{writer}, #{content})
 	</insert>
+	
+	<select id="getRecommendedAttr" resultType="String" parameterType="com.service.database.RecommendedSender">
+		SELECT PLUS_MINUS FROM PUBLIC_RECOMMENDED WHERE IDX = #{idx} AND ID = #{id} AND BOARD_NAME = #{board_name}
+	</select>
+	
+	<insert id="insertRecommended" parameterType="com.service.database.RecommendedSender">
+		INSERT INTO PUBLIC_RECOMMENDED(IDX,ID,BOARD_NAME,PLUS_MINUS) 
+		VALUES(#{idx}, #{id}, #{board_name}, #{plus_minus})
+	</insert>
+	
+	<update id="plusRecommended" parameterType="com.service.database.RecommendedSender">
+		UPDATE ${board_name} SET RECOMMENDED = RECOMMENDED + 1 WHERE IDX = #{idx}
+	</update>
+	
+	<update id="minusRecommended" parameterType="com.service.database.RecommendedSender">
+		UPDATE ${board_name} SET RECOMMENDED = RECOMMENDED - 1 WHERE IDX = #{idx}
+	</update>
+	
+	<delete id="deleteBoardContent" parameterType="com.service.database.BoardPage">
+		DELETE ${boardName} WHERE IDX = #{idx}
+	</delete>
+	
+	<select id="getImg" resultMap="ImgAttrResultMap">
+		SELECT * FROM IMGTABLE ORDER BY IDX DESC
+	</select>
+	
+	<insert id="insertImg" parameterType="com.service.database.ImgSender">
+		INSERT INTO IMGTABLE(WRITER, IMG) VALUES(#{writer}, #{img})
+	</insert>
+	
+	<select id="getLookupRank" resultMap="BasicBoardAttrResultMap">
+	SELECT BOARD_NAME, IDX, TITLE, LOOKUP FROM 
+(SELECT * FROM 
+(SELECT * FROM BOARD_PUBLIC UNION ALL 
+SELECT * FROM BOARD_PRIVATE UNION ALL 
+SELECT * FROM board_qa UNION ALL
+SELECT * FROM board_java UNION ALL
+SELECT * FROM board_kotlin UNION ALL
+SELECT * FROM board_http_css UNION ALL
+SELECT * FROM board_javascript UNION ALL
+SELECT * FROM board_jquery UNION ALL
+SELECT * FROM board_jstl UNION ALL
+SELECT * FROM board_jsp UNION ALL
+SELECT * FROM board_php UNION ALL
+SELECT * FROM board_asp UNION ALL
+SELECT * FROM board_git UNION ALL
+SELECT * FROM board_svn UNION ALL
+SELECT * FROM board_r UNION ALL
+SELECT * FROM board_python UNION ALL
+SELECT * FROM board_mr) ORDER BY lookup DESC)
+WHERE ROWNUM &lt;= 5
+	</select>
+	<select id="getRecommendedRank" resultMap="BasicBoardAttrResultMap">
+	SELECT BOARD_NAME, IDX, TITLE, RECOMMENDED FROM 
+(SELECT * FROM 
+(SELECT * FROM BOARD_PUBLIC UNION ALL 
+SELECT * FROM BOARD_PRIVATE UNION ALL 
+SELECT * FROM board_qa UNION ALL
+SELECT * FROM board_java UNION ALL
+SELECT * FROM board_kotlin UNION ALL
+SELECT * FROM board_http_css UNION ALL
+SELECT * FROM board_javascript UNION ALL
+SELECT * FROM board_jquery UNION ALL
+SELECT * FROM board_jstl UNION ALL
+SELECT * FROM board_jsp UNION ALL
+SELECT * FROM board_php UNION ALL
+SELECT * FROM board_asp UNION ALL
+SELECT * FROM board_git UNION ALL
+SELECT * FROM board_svn UNION ALL
+SELECT * FROM board_r UNION ALL
+SELECT * FROM board_python UNION ALL
+SELECT * FROM board_mr) ORDER BY RECOMMENDED DESC)
+WHERE ROWNUM &lt;= 5
+	</select>
+	
+	<select id="getWriterRank" resultMap="BasicBoardAttrResultMap">
+	SELECT * FROM (
+SELECT WRITER, COUNT(*) AS "count" FROM
+(SELECT * FROM BOARD_PUBLIC UNION ALL 
+SELECT * FROM BOARD_PRIVATE UNION ALL 
+SELECT * FROM board_qa UNION ALL
+SELECT * FROM board_java UNION ALL
+SELECT * FROM board_kotlin UNION ALL
+SELECT * FROM board_http_css UNION ALL
+SELECT * FROM board_javascript UNION ALL
+SELECT * FROM board_jquery UNION ALL
+SELECT * FROM board_jstl UNION ALL
+SELECT * FROM board_jsp UNION ALL
+SELECT * FROM board_php UNION ALL
+SELECT * FROM board_asp UNION ALL
+SELECT * FROM board_git UNION ALL
+SELECT * FROM board_svn UNION ALL
+SELECT * FROM board_r UNION ALL
+SELECT * FROM board_python UNION ALL
+SELECT * FROM board_mr) GROUP BY WRITER ORDER BY COUNT(*) DESC) WHERE ROWNUM &lt;= 5
+	</select>
+	
+	<select id="getCreateDateRank" resultMap="BasicBoardAttrResultMap">
+	SELECT BOARD_NAME, IDX, TITLE, CREATE_DATE FROM 
+(SELECT * FROM 
+(SELECT * FROM BOARD_PUBLIC UNION ALL 
+SELECT * FROM BOARD_PRIVATE UNION ALL 
+SELECT * FROM board_qa UNION ALL
+SELECT * FROM board_java UNION ALL
+SELECT * FROM board_kotlin UNION ALL
+SELECT * FROM board_http_css UNION ALL
+SELECT * FROM board_javascript UNION ALL
+SELECT * FROM board_jquery UNION ALL
+SELECT * FROM board_jstl UNION ALL
+SELECT * FROM board_jsp UNION ALL
+SELECT * FROM board_php UNION ALL
+SELECT * FROM board_asp UNION ALL
+SELECT * FROM board_git UNION ALL
+SELECT * FROM board_svn UNION ALL
+SELECT * FROM board_r UNION ALL
+SELECT * FROM board_python UNION ALL
+SELECT * FROM board_mr) ORDER BY CREATE_DATE DESC)
+WHERE ROWNUM &lt;= 5
+	</select>
 </mapper>

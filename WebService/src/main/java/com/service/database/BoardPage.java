@@ -1,6 +1,7 @@
 package com.service.database;
 
 public class BoardPage {
+	private String idx;
 	private String boardName;
 	private int start;
 	private int end;
@@ -10,6 +11,12 @@ public class BoardPage {
 	private String writer;
 	private String content;
 	
+	public String getIdx() {
+		return idx;
+	}
+	public void setIdx(String idx) {
+		this.idx = idx;
+	}
 	public String getBoardName() {
 		return boardName;
 	}

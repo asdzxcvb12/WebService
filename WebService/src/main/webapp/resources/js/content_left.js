@@ -1,3 +1,16 @@
+function privateTag(cate, subCate) {
+	$.ajax({
+		url: '/project/authorityCheck.do',
+		type: 'post',
+		success: function(getData) {
+			var result = JSON.parse(getData);
+			if(result.result == 'positive') location.href='/project/index.do?cate='+cate+'&subCate='+subCate;
+			else if(result.result == 'negative') alert('you need high access autority');
+			else if(result.result == 'fail') alert('you need signIn');
+		}
+	});
+}
+
 function go_time() {
 
 	var now = new Date();

@@ -13,9 +13,9 @@
 			<tr align="center" class="common_board_tr">
 				<th style="width: 5%" class="common_board_td">번호</th>
 				<th style="width: 40%" class="common_board_td">제목</th>
-				<th style="width: 10%" class="common_board_td">작성자</th>
-				<th style="width: 15%" class="common_board_td">등록일</th>
-				<th style="width: 15%" class="common_board_td">수정일</th>
+				<th style="width: 20%" class="common_board_td">작성자</th>
+				<th style="width: 10%" class="common_board_td">등록일</th>
+				<th style="width: 10%" class="common_board_td">수정일</th>
 				<th style="width: 7%" class="common_board_td">추천수</th>
 				<th style="width: 7%" class="common_board_td">조회수</th>
 			</tr>
@@ -25,13 +25,13 @@
 					<tr align="center" class="common_board_end">
 						<td id="getBasicContentIdx" style="width: 5%" class="common_borad_content_td">${board.idx}</td>
 						<td style="width:40%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="common_borad_content_td">
-							<a id="getBasicContent" class="commonAtag" onClick="basicContent(${board.idx})">
+							<a id="getBasicContent" class="commonAtag" onClick="basicContent('${cate}', '${subCate}', ${board.idx})">
 							${board.title}
 							</a>
 						</td>
-						<td style="width: 10%" class="common_borad_content_td">${board.writer}</td>
-						<td style="width: 15%" class="common_borad_content_td">${board.create_date}</td>
-						<td style="width: 15%" class="common_borad_content_td">${board.fix_date}</td>
+						<td style="width: 20%" class="common_borad_content_td">${board.writer}</td>
+						<td style="width: 10%" class="common_borad_content_td">${board.create_date}</td>
+						<td style="width: 10%" class="common_borad_content_td">${board.fix_date}</td>
 						<td style="width: 7%" class="common_borad_content_td">${board.recommended}</td>
 						<td style="width: 7%" class="common_borad_content_td">${board.lookup}</td>
 					</tr>
@@ -40,13 +40,13 @@
 					<tr align="center" class="common_board_content_tr">
 						<td id="getBasicContentIdx" style="width: 5%" class="common_borad_content_td">${board.idx}</td>
 						<td style="width:40%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="common_borad_content_td">
-							<a id="getBasicContent" class="commonAtag" onClick="basicContent(${board.idx})">
+							<a id="getBasicContent" class="commonAtag" onClick="basicContent('${cate}', '${subCate}', ${board.idx})">
 							${board.title}
 							</a>
 						</td>
-						<td style="width: 10%" class="common_borad_content_td">${board.writer}</td>
-						<td style="width: 15%" class="common_borad_content_td">${board.create_date}</td>
-						<td style="width: 15%" class="common_borad_content_td">${board.fix_date}</td>
+						<td style="width: 20%" class="common_borad_content_td">${board.writer}</td>
+						<td style="width: 10%" class="common_borad_content_td">${board.create_date}</td>
+						<td style="width: 10%" class="common_borad_content_td">${board.fix_date}</td>
 						<td style="width: 7%" class="common_borad_content_td">${board.recommended}</td>
 						<td style="width: 7%" class="common_borad_content_td">${board.lookup}</td>
 					</tr>
@@ -58,10 +58,10 @@
 				<th colspan="7" align="center" class="common_board_td">
 				<c:choose>
 					<c:when test="${searchOption ne null}">
-						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}&searchOption=${searchOption}&search=${search}" class="commonAtag">&lt;&lt;&lt;&lt;</a>
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=1&searchOption=${searchOption}&search=${search}" class="commonAtag">&lt;&lt;&lt;&lt;</a>
 					</c:when>
 					<c:otherwise>
-						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}" class="commonAtag">&lt;&lt;&lt;&lt;</a>
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=1" class="commonAtag">&lt;&lt;&lt;&lt;</a>
 					</c:otherwise>
 				</c:choose>
 					&nbsp;
@@ -94,7 +94,7 @@
 				&nbsp;
 				<c:choose>
 					<c:when test="${searchOption ne null}">
-						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${page}&searchOption=${searchOption}&search=${search}" class="commonAtag">&gt;&gt;&gt;&gt;</a>
+						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${entirePage}&searchOption=${searchOption}&search=${search}" class="commonAtag">&gt;&gt;&gt;&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<a href="?cate=${cate}&subCate=${subCate}&pageNum=${entirePage}" class="commonAtag">&gt;&gt;&gt;&gt;</a>
@@ -114,9 +114,9 @@
 		<input id="searchContent"type="text" size="15px">
 			<a id="basicBoardSearch" class="commonAtag" style="margin-right:20px;">SEARCH</a>
 			<a id="basicBoardWrite" class="commonAtag" style="margin-right:5px;">WRITE</a>
+			<input type="hidden" id="basicBoardName" name="subCate" value="${subCate}">
+			<input type="hidden" id="cateName" name="cate" value="${cate}">
 	</div>
-	<input type="hidden" id="basicBoardName" name="subCate" value="${subCate}">
-	<input type="hidden" id="cateName" name="cate" value="${cate}">
 </form>	
 </body>
 </html>

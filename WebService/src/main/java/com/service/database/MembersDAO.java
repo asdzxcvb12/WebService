@@ -10,4 +10,5 @@ public interface MembersDAO {
 	public ArrayList<Members> getMembersLog();
 	public void insertMembers(Members members);
 	public void insertLog(MembersLog membersLog);
+	public String getMembersAuthority(String id);
 }

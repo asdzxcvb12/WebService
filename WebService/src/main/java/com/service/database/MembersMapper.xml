@@ -47,6 +47,10 @@
 		SELECT NICK FROM MEMBERS
 	</select>
 	
+	<select id="getMembersAuthority" parameterType="String" resultType="String">
+		SELECT AUTHORITY FROM MEMBERS WHERE ID = '${value}'
+	</select>
+	
 	<!-- INSERT MEMBERS -->
 	<insert id="insertMembers" parameterType="com.service.database.Members">
 		INSERT INTO MEMBERS(ID, PW, NICK, MAIL, PREFERENCE, ADDRESS) 

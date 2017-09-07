@@ -6,6 +6,6 @@
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8;">
 </head>
 <body>
-	<div align="center"> footer </div>
+	<div align="center"> Copyright ⓒ 2017 by maru All Pictures cannot be copied without permission <br>Copyright (C) 2017 maru all rights reserved. </div>
 </body>
 </html>

@@ -6,7 +6,8 @@
 	<meta charset="utf-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-<div align="center">
+<div align="center" style="height: 540px; vertical-align: middle;">
+<div style="padding-top: 20%;">
 <form id="logFormTag" action="/project/index/signIn/result.do" method="post">
 	<table border="1">
 		<tr>
@@ -36,6 +37,7 @@
 		</tr>
 	</table>
 </form>
+</div>
 </div>
 </body>
 </html>
